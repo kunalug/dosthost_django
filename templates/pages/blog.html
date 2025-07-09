@@ -1,0 +1,27 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block title %} | Blog {% endblock %}
+
+<!-- Start Extra Styles -->
+{% block extra_styles %} {% include 'content/blog/extra_styles.html' %} {% endblock %}
+<!-- End Extra Styles -->
+
+<!--- Start Page Content -->
+{% block page_content %}
+<!-- Page Content -->
+
+<!-- Start Banner -->
+{% include 'content/blog/banner.html' %}
+<!-- End Banner -->
+
+<!-- Start Blog Section -->
+{% include 'content/blog/blog.html' with blogs=blogs %}
+<!--End Blog-->
+
+<!--- End Page Content -->
+{% endblock %}
+<!-- Extra Scripts Start -->
+{% block extra_scripts%} {% include 'content/blog/extra_scripts.html' %} {% endblock %}
+<!-- Extra Scripts End -->
+       

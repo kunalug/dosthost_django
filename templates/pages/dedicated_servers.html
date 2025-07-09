@@ -1,0 +1,46 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+<!-- Start Extra Styles -->
+{% block extra_styles %} {% include 'content/dedicated_servers/extra_styles.html' %} {% endblock %}
+<!-- End Extra Styles -->
+
+<!--- Start Page Content -->
+{% block page_content %}
+<!-- Page Content -->
+
+<!--Start Banner-->
+{% include 'content/dedicated_servers/banner.html' %}
+<!--End Banner-->
+
+<!--Start Plans-->
+{% include 'content/linux_vps/plans.html' %}
+<!--End Plans-->
+
+<!--Start Features-->
+{% include 'content/dedicated_servers/features.html' %}
+<!--End Features-->
+
+<!--Start Money Back Guarantee-->
+{% include 'content/dedicated_servers/money_back.html' %}
+<!--End Money Back Guarantee-->
+
+<!--Start Tools-->
+{% include 'content/dedicated_servers/tools.html' %}
+<!--End Tools-->
+
+<!--Start Hosting-->
+{% include 'content/dedicated_servers/hosting.html' %}
+<!--End Hosting-->
+
+<!--Start FAQ'S-->
+{% include 'components/faqs.html' %}
+<!--Start FAQ'S-->
+
+<!--- End Page Content -->
+{% endblock %}
+<!-- Extra Scripts Start -->
+{% block extra_scripts%} {% include 'content/dedicated_servers/extra_scripts.html' %} {% endblock %}
+<!-- Extra Scripts End -->
+
+{% block title %} | Dedicated Servers Hosting Plans{% endblock %}

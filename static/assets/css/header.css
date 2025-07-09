@@ -1,0 +1,6 @@
+@media (min-width: 992px) {
+  .menu-hover .app-sidebar, [data-nav-style=menu-hover][data-nav-layout=horizontal] .app-sidebar, [data-nav-style=menu-hover][toggled=menu-hover-closed] .app-sidebar {
+    width: 9rem;
+   background-color: var(--primary09);
+  }
+}

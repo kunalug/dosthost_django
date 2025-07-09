@@ -1,0 +1,529 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+<!-- Start Extra Styles -->
+{% block extra_styles %} {% include 'content/about/extra_styles.html' %} {% endblock %}
+<!-- End Extra Styles -->
+
+<!--- Start Page Content -->
+{% block page_content %}
+<!-- Page Content -->
+
+<div class="main-content app-content">
+    <section>
+        <div class="banner-2 banner-section banner-arrow-down">
+            <img src="{% static 'assets/images/patterns/1.png' %}" alt="img" class="patterns-2">
+            <img src="{% static 'assets/images/patterns/4.png' %}" alt="img" class="patterns-3">
+            <img src="{% static 'assets/images/patterns/6.png' %}" alt="img" class="patterns-4">
+            <img src="{% static 'assets/images/patterns/6.png' %}" alt="img" class="patterns-6">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-7">
+                        <div class="mb-4">
+                            <p class="mb-3 content-1 h5 text-white">Powerful Linux <span class="tx-info-dark">Reseller Hosting</span></p>
+                            <p class="mb-4 content-2 tx-18">
+                                Share processes and data securely on a need to know basis without the need for reconciliation it combines a permissione.
+                            </p>
+                            <ul class="list-unstyled mb-4">
+                                <li class="list-item mb-2"><i class="fe fe-chevron-right bg-white-2 rounded-circle p-1 me-2"></i>State-of-the-Art Hosting Infrastructure</li>
+                                <li class="list-item mb-2"><i class="fe fe-chevron-right bg-white-2 rounded-circle p-1 me-2"></i>Lightning-Fast Speed</li>
+                                <li class="list-item"><i class="fe fe-chevron-right bg-white-2 rounded-circle p-1 me-2"></i>30-Day Money-Back Guarantee</li>
+                            </ul>
+                        </div>
+                        <a href="#plans" class="btn btn-lg btn-secondary"><i class="fe fe-eye me-1"></i> View Plans</a>
+                        <a href="{% url 'contact' %}" class="btn btn-lg btn-white"><i class="bi bi-person me-2"></i> Contact Us</a>
+                    </div>
+                    <div class="col-lg-5">
+                        <div class="banner-bg mt-5 mt-lg-0">
+                            <img src="{% static 'assets/images/png/47.png' %}" class="img-fluid" alt="img">
+                            <div class="price-offer">
+                                <div>
+                                    <p class="mb-1 tx-11 fw-bold lh-1 mt-2">Offer Price</p>
+                                    <p class="mb-1 tx-16 fw-bold lh-1">Now Only</p>
+                                    {% if starting_price %}
+                                    <h4 class="mb-0 text-white">₹{{ starting_price|floatformat:2 }}</h4>
+                                    {% else %}
+                                    <h3 class="mb-0 text-white">-</h3>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+    <!--Start Plans-->
+    {% include 'components/plans.html' %}
+    <!--End Plans-->
+
+    <!-- Features Section -->
+    <section class="section bg-pattern-1 bg-image1 z-index-0 overflow-hidden">
+        <div class="container">
+            <div class="heading-section">
+                <div class="heading-subtitle"><span class="tx-primary tx-16 fw-semibold">Features</span></div>
+                <div class="heading-title">Why Choose <span class="tx-primary">Dost Host?</span></div>
+                <div class="heading-description">Powerful Features for Your Success</div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 linux-feature-list">
+                    <div class="card feature-card-15">
+                        <div class="card-body">
+                            <div class="d-flex">
+                                <span class="avatar me-3 bg-primary-transparent primary-shadow tx-primary rounded-circle tx-18"><i class="bi bi-lightning-charge"></i></span>
+                                <div class="flex-grow-1">
+                                    <h5 class="mb-3">Lightning Fast Performance</h5>
+                                    <ul class="list-styled tx-16 mb-0 ps-3 fw-500">
+                                        <li class="list-item mb-2">SSD Storage for Ultra-Fast Loading</li>
+                                        <li class="list-item mb-2">CDN Integration for Global Speed</li>
+                                        <li class="list-item">Optimized Server Configuration</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 linux-feature-list">
+                    <div class="card feature-card-15">
+                        <div class="card-body">
+                            <div class="d-flex">
+                                <span class="avatar me-3 bg-secondary-transparent secondary-shadow tx-secondary rounded-circle tx-18"><i class="bi bi-shield-check"></i></span>
+                                <div class="flex-grow-1">
+                                    <h5 class="mb-3">Advanced Security Protection</h5>
+                                    <ul class="list-styled tx-16 mb-0 ps-3 fw-500">
+                                        <li class="list-item mb-2">Free SSL Certificates for All Domains</li>
+                                        <li class="list-item mb-2">DDoS Protection & Firewall</li>
+                                        <li class="list-item">Regular Security Updates & Monitoring</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 linux-feature-list">
+                    <div class="card feature-card-15">
+                        <div class="card-body">
+                            <div class="d-flex">
+                                <span class="avatar me-3 bg-success-transparent success-shadow tx-success rounded-circle tx-18"><i class="bi bi-gear-wide-connected"></i></span>
+                                <div class="flex-grow-1">
+                                    <h5 class="mb-3">User-Friendly Control Panel</h5>
+                                    <ul class="list-styled tx-16 mb-0 ps-3 fw-500">
+                                        <li class="list-item mb-2">Industry-Standard cPanel Interface</li>
+                                        <li class="list-item mb-2">One-Click App Installations</li>
+                                        <li class="list-item">Easy File Management & Database Access</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 linux-feature-list">
+                    <div class="card feature-card-15">
+                        <div class="card-body">
+                            <div class="d-flex">
+                                <span class="avatar me-3 bg-info-transparent info-shadow tx-info rounded-circle tx-18"><i class="bi bi-headset"></i></span>
+                                <div class="flex-grow-1">
+                                    <h5 class="mb-3">24/7 Expert Support</h5>
+                                    <ul class="list-styled tx-16 mb-0 ps-3 fw-500">
+                                        <li class="list-item mb-2">Round-the-Clock Technical Support</li>
+                                        <li class="list-item mb-2">Live Chat, Phone & Email Support</li>
+                                        <li class="list-item">Knowledgeable Support Team</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 linux-feature-list">
+                    <div class="card feature-card-15">
+                        <div class="card-body">
+                            <div class="d-flex">
+                                <span class="avatar me-3 bg-pink-transparent pink-shadow tx-pink rounded-circle tx-18"><i class="bi bi-arrow-up-circle"></i></span>
+                                <div class="flex-grow-1">
+                                    <h5 class="mb-3">Reliable Infrastructure</h5>
+                                    <ul class="list-styled tx-16 mb-0 ps-3 fw-500">
+                                        <li class="list-item mb-2">Tier-3 Data Centers with Redundancy</li>
+                                        <li class="list-item mb-2">99.9% Uptime SLA Guarantee</li>
+                                        <li class="list-item">Multiple Server Locations</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 linux-feature-list">
+                    <div class="card feature-card-15">
+                        <div class="card-body">
+                            <div class="d-flex">
+                                <span class="avatar me-3 bg-danger-transparent danger-shadow tx-danger rounded-circle tx-18"><i class="bi bi-envelope-at"></i></span>
+                                <div class="flex-grow-1">
+                                    <h5 class="mb-3">Professional Email Solutions</h5>
+                                    <ul class="list-styled tx-16 mb-0 ps-3 fw-500">
+                                        <li class="list-item mb-2">Unlimited Email Accounts</li>
+                                        <li class="list-item mb-2">Webmail Access & Mobile Support</li>
+                                        <li class="list-item">Anti-Spam & Anti-Virus Protection</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Features Section End -->
+
+    <!-- Apps Section -->
+    <section class="section bg-pattern-2 bg-image2 text-white">
+        <div class="container">
+            <div class="row justify-content-between align-items-center">
+                <div class="col-lg-6">
+                    <div class="heading-section text-start mb-4">
+                        <div class="heading-title text-white">One-Click App Installation</div>
+                        <div class="heading-description text-white op-8">300+ Applications Available</div>
+                    </div>
+                    <p class="op-8">Build your website effortlessly with our extensive library of pre-configured applications. 
+                        From WordPress and e-commerce platforms to development frameworks, deploy popular applications 
+                        instantly with just one click. No technical expertise required - get your website up and running 
+                        in minutes, not hours.
+                    </p>
+                </div>
+                <div class="col-lg-6">
+                    <div class="row justify-content-center">
+                        <div class="col-xl-3 col-md-4">
+                            <div class="card feature-card-15 text-center">
+                                <div class="card-body">
+                                    <img src="{% static 'assets/images/png/apps/1.png' %}" alt="img" height="80" class="img-fluid app-img">
+                                    <img src="{% static 'assets/images/png/apps/28.png' %}" alt="img" height="80" class="img-fluid app-img-white">
+                                </div>
+                            </div>
+                            <div class="card feature-card-15 text-center">
+                                <div class="card-body">
+                                    <img src="{% static 'assets/images/png/apps/2.png' %}" alt="img" height="80" class="img-fluid app-img">
+                                    <img src="{% static 'assets/images/png/apps/29.png' %}" alt="img" height="80" class="img-fluid app-img-white">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-md-4">
+                            <div class="card feature-card-15 text-center">
+                                <div class="card-body">
+                                    <img src="{% static 'assets/images/png/apps/3.png' %}" alt="img" height="80" class="img-fluid app-img">
+                                    <img src="{% static 'assets/images/png/apps/30.png' %}" alt="img" height="80" class="img-fluid app-img-white">
+                                </div>
+                            </div>
+                            <div class="card feature-card-15 text-center">
+                                <div class="card-body">
+                                    <img src="{% static 'assets/images/png/apps/4.png' %}" alt="img" height="80" class="img-fluid app-img">
+                                    <img src="{% static 'assets/images/png/apps/31.png' %}" alt="img" height="80" class="img-fluid app-img-white">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-md-4">
+                            <div class="card feature-card-15 text-center">
+                                <div class="card-body">
+                                    <img src="{% static 'assets/images/png/apps/5.png' %}" alt="img" height="80" class="img-fluid app-img">
+                                    <img src="{% static 'assets/images/png/apps/32.png' %}" alt="img" height="80" class="img-fluid app-img-white">
+                                </div>
+                            </div>
+                            <div class="card feature-card-15 text-center">
+                                <div class="card-body">
+                                    <img src="{% static 'assets/images/png/apps/6.png' %}" alt="img" height="80" class="img-fluid app-img">
+                                    <img src="{% static 'assets/images/png/apps/33.png' %}" alt="img" height="80" class="img-fluid app-img-white">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Apps Section -->
+
+    <!-- Specifications Section -->
+    <section class="section bg-pattern-1 bg-image3">
+        <div class="container">
+            <div class="heading-section">
+                <div class="heading-subtitle"><span class="tx-primary tx-16 fw-semibold">Specifications</span></div>
+                <div class="heading-title">Technical <span class="tx-primary">Specifications</span></div>
+                <div class="heading-description">Advanced Hosting Infrastructure</div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="d-lg-flex spec-tabs">
+                        <div class="nav flex-column nav-pills mb-5 mb-lg-0" id="spec-pills-tab" role="tablist" aria-orientation="vertical">
+                            <button class="nav-link active" id="spec-pills-1-tab" data-bs-toggle="pill" data-bs-target="#spec-pills-1" type="button" role="tab" aria-controls="spec-pills-1" aria-selected="true">
+                                <span><i class="bi bi-hdd-stack"></i></span>
+                                Server Infrastructure
+                            </button>
+                            <button class="nav-link" id="spec-pills-2-tab" data-bs-toggle="pill" data-bs-target="#spec-pills-2" type="button" role="tab" aria-controls="spec-pills-2" aria-selected="false">
+                                <span><i class="bi bi-code-slash"></i></span>
+                                Development Technologies
+                            </button>
+                            <button class="nav-link" id="spec-pills-3-tab" data-bs-toggle="pill" data-bs-target="#spec-pills-3" type="button" role="tab" aria-controls="spec-pills-3" aria-selected="false">
+                                <span><i class="bi bi-gear-wide-connected"></i></span>
+                                WHM Admin Panel
+                            </button>
+                            <button class="nav-link" id="spec-pills-4-tab" data-bs-toggle="pill" data-bs-target="#spec-pills-4" type="button" role="tab" aria-controls="spec-pills-4" aria-selected="false">
+                                <span><i class="bi bi-gear"></i></span>
+                                cPanel Control Panel
+                            </button>
+                            <button class="nav-link" id="spec-pills-5-tab" data-bs-toggle="pill" data-bs-target="#spec-pills-5" type="button" role="tab" aria-controls="spec-pills-5" aria-selected="false">
+                                <span><i class="bi bi-envelope-check"></i></span>
+                                Email & Security Features
+                            </button>
+                        </div>
+                        <div class="tab-content" id="spec-pills-tabContent">
+                            <div class="tab-pane fade show active" id="spec-pills-1" role="tabpanel" aria-labelledby="spec-pills-1-tab">
+                                <div class="d-md-flex">
+                                    <div>
+                                        <h4 class="mb-4">Server Infrastructure</h4>
+                                        <ul class="list-unstyled mb-0 fw-500">
+                                            <li class="list-item mb-2">
+                                                <div class="d-flex align-items-start">
+                                                    <span class="me-2 tx-primary"><i class="bi bi-check-circle"></i></span>
+                                                    <span>High-Performance Intel Xeon Processors with Multi-Core Technology</span>
+                                                </div>
+                                            </li>
+                                            <li class="list-item mb-2">
+                                                <div class="d-flex align-items-start">
+                                                    <span class="me-2 tx-primary"><i class="bi bi-check-circle"></i></span>
+                                                    <span>32 GB DDR4 ECC RAM for Maximum Performance</span>
+                                                </div>
+                                            </li>
+                                            <li class="list-item mb-2">
+                                                <div class="d-flex align-items-start">
+                                                    <span class="me-2 tx-primary"><i class="bi bi-check-circle"></i></span>
+                                                    <span>NVMe SSD Storage with RAID 10 Configuration</span>
+                                                </div>
+                                            </li>
+                                            <li class="list-item mb-2">
+                                                <div class="d-flex align-items-start">
+                                                    <span class="me-2 tx-primary"><i class="bi bi-check-circle"></i></span>
+                                                    <span>1 Gbps Network Connectivity with 99.9% Uptime Guarantee</span>
+                                                </div>
+                                            </li>
+                                            <li class="list-item mb-2">
+                                                <div class="d-flex align-items-start">
+                                                    <span class="me-2 tx-primary"><i class="bi bi-check-circle"></i></span>
+                                                    <span>Tier-3 Data Center with Redundant Power & Cooling Systems</span>
+                                                </div>
+                                            </li>
+                                            <li class="list-item">
+                                                <div class="d-flex align-items-start">
+                                                    <span class="me-2 tx-primary"><i class="bi bi-check-circle"></i></span>
+                                                    <span>24/7 Server Monitoring & Automated Backup Solutions</span>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="text-center ms-md-5 my-auto">
+                                        <img src="{% static 'assets/images/png/17.png' %}" alt="img" class="img-fluid" width="280">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="spec-pills-2" role="tabpanel" aria-labelledby="spec-pills-2-tab">
+                                <div class="d-md-flex">
+                                    <div>
+                                        <h4 class="mb-4">Development Technologies</h4>
+                                        <ul class="list-unstyled mb-0 fw-500">
+                                            <li class="list-item mb-2">
+                                                <div class="d-flex align-items-start">
+                                                    <span class="me-2 tx-primary"><i class="bi bi-check-circle"></i></span>
+                                                    <span>PHP 8.2, 8.1, 7.4 with Multiple Version Support</span>
+                                                </div>
+                                            </li>
+                                            <li class="list-item mb-2">
+                                                <div class="d-flex align-items-start">
+                                                    <span class="me-2 tx-primary"><i class="bi bi-check-circle"></i></span>
+                                                    <span>Apache & Nginx Web Server Support</span>
+                                                </div>
+                                            </li>
+                                            <li class="list-item mb-2">
+                                                <div class="d-flex align-items-start">
+                                                    <span class="me-2 tx-primary"><i class="bi bi-check-circle"></i></span>
+                                                    <span>MySQL 8.0 & MariaDB Database Support</span>
+                                                </div>
+                                            </li>
+                                            <li class="list-item mb-2">
+                                                <div class="d-flex align-items-start">
+                                                    <span class="me-2 tx-primary"><i class="bi bi-check-circle"></i></span>
+                                                    <span>Python, Node.js, Ruby on Rails Support</span>
+                                                </div>
+                                            </li>
+                                            <li class="list-item">
+                                                <div class="d-flex align-items-start">
+                                                    <span class="me-2 tx-primary"><i class="bi bi-check-circle"></i></span>
+                                                    <span>Composer, Git, SSH Access & SSL Certificate Support</span>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="text-center ms-md-5 my-auto">
+                                        <img src="{% static 'assets/images/png/19.png' %}" alt="img" class="img-fluid" width="280">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="spec-pills-3" role="tabpanel" aria-labelledby="spec-pills-3-tab">
+                                <div class="d-md-flex">
+                                    <div>
+                                        <h4 class="mb-4">WHM Admin Panel</h4>
+                                        <ul class="list-unstyled mb-0 fw-500">
+                                            <li class="list-item mb-2">
+                                                <div class="d-flex align-items-start">
+                                                    <span class="me-2 tx-primary"><i class="bi bi-check-circle"></i></span>
+                                                    <span>Create & Manage Multiple Hosting Packages</span>
+                                                </div>
+                                            </li>
+                                            <li class="list-item mb-2">
+                                                <div class="d-flex align-items-start">
+                                                    <span class="me-2 tx-primary"><i class="bi bi-check-circle"></i></span>
+                                                    <span>Complete Client Account Management System</span>
+                                                </div>
+                                            </li>
+                                            <li class="list-item mb-2">
+                                                <div class="d-flex align-items-start">
+                                                    <span class="me-2 tx-primary"><i class="bi bi-check-circle"></i></span>
+                                                    <span>Real-time Server Performance Monitoring</span>
+                                                </div>
+                                            </li>
+                                            <li class="list-item mb-2">
+                                                <div class="d-flex align-items-start">
+                                                    <span class="me-2 tx-primary"><i class="bi bi-check-circle"></i></span>
+                                                    <span>Automated Software Updates & Security Patches</span>
+                                                </div>
+                                            </li>
+                                            <li class="list-item">
+                                                <div class="d-flex align-items-start">
+                                                    <span class="me-2 tx-primary"><i class="bi bi-check-circle"></i></span>
+                                                    <span>Comprehensive DNS Zone Management Tools</span>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="text-center ms-md-5 my-auto">
+                                        <img src="{% static 'assets/images/png/18.png' %}" alt="img" class="img-fluid" width="280">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="spec-pills-4" role="tabpanel" aria-labelledby="spec-pills-4-tab">
+                                <div class="d-md-flex">
+                                    <div>
+                                        <h4 class="mb-4">cPanel Control Panel</h4>
+                                        <ul class="list-unstyled mb-0 fw-500">
+                                            <li class="list-item mb-2">
+                                                <div class="d-flex align-items-start">
+                                                    <span class="me-2 tx-primary"><i class="bi bi-check-circle"></i></span>
+                                                    <span>Drag & Drop Website Builder with Templates</span>
+                                                </div>
+                                            </li>
+                                            <li class="list-item mb-2">
+                                                <div class="d-flex align-items-start">
+                                                    <span class="me-2 tx-primary"><i class="bi bi-check-circle"></i></span>
+                                                    <span>Advanced Website Analytics & Traffic Reports</span>
+                                                </div>
+                                            </li>
+                                            <li class="list-item mb-2">
+                                                <div class="d-flex align-items-start">
+                                                    <span class="me-2 tx-primary"><i class="bi bi-check-circle"></i></span>
+                                                    <span>One-Click WordPress & CMS Installation</span>
+                                                </div>
+                                            </li>
+                                            <li class="list-item mb-2">
+                                                <div class="d-flex align-items-start">
+                                                    <span class="me-2 tx-primary"><i class="bi bi-check-circle"></i></span>
+                                                    <span>Softaculous Auto Installer with 400+ Scripts</span>
+                                                </div>
+                                            </li>
+                                            <li class="list-item mb-2">
+                                                <div class="d-flex align-items-start">
+                                                    <span class="me-2 tx-primary"><i class="bi bi-check-circle"></i></span>
+                                                    <span>File Manager with Code Editor & FTP Access</span>
+                                                </div>
+                                            </li>
+                                            <li class="list-item">
+                                                <div class="d-flex align-items-start">
+                                                    <span class="me-2 tx-primary"><i class="bi bi-check-circle"></i></span>
+                                                    <span>Database Management with phpMyAdmin</span>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="text-center ms-md-5 my-auto">
+                                        <img src="{% static 'assets/images/png/17.png' %}" alt="img" class="img-fluid" width="280">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="spec-pills-5" role="tabpanel" aria-labelledby="spec-pills-5-tab">
+                                <div class="d-md-flex">
+                                    <div>
+                                        <h4 class="mb-4">Email & Security Features</h4>
+                                        <ul class="list-unstyled mb-0 fw-500">
+                                            <li class="list-item mb-2">
+                                                <div class="d-flex align-items-start">
+                                                    <span class="me-2 tx-primary"><i class="bi bi-check-circle"></i></span>
+                                                    <span>Professional Email Accounts with IMAP/POP3 Support</span>
+                                                </div>
+                                            </li>
+                                            <li class="list-item mb-2">
+                                                <div class="d-flex align-items-start">
+                                                    <span class="me-2 tx-primary"><i class="bi bi-check-circle"></i></span>
+                                                    <span>Mobile Device Sync (iPhone, Android, Blackberry)</span>
+                                                </div>
+                                            </li>
+                                            <li class="list-item mb-2">
+                                                <div class="d-flex align-items-start">
+                                                    <span class="me-2 tx-primary"><i class="bi bi-check-circle"></i></span>
+                                                    <span>Advanced Webmail Interface with Calendar & Contacts</span>
+                                                </div>
+                                            </li>
+                                            <li class="list-item mb-2">
+                                                <div class="d-flex align-items-start">
+                                                    <span class="me-2 tx-primary"><i class="bi bi-check-circle"></i></span>
+                                                    <span>Enterprise-Grade Spam & Virus Protection</span>
+                                                </div>
+                                            </li>
+                                            <li class="list-item mb-2">
+                                                <div class="d-flex align-items-start">
+                                                    <span class="me-2 tx-primary"><i class="bi bi-check-circle"></i></span>
+                                                    <span>Email Forwarding, Auto-Responders & Aliases</span>
+                                                </div>
+                                            </li>
+                                            <li class="list-item">
+                                                <div class="d-flex align-items-start">
+                                                    <span class="me-2 tx-primary"><i class="bi bi-check-circle"></i></span>
+                                                    <span>Free SSL Certificates & Advanced Security Monitoring</span>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="text-center ms-md-5 my-auto">
+                                        <img src="{% static 'assets/images/png/19.png' %}" alt="img" class="img-fluid" width="280">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Specifications Section -->
+
+    <!--Start Best Support -->
+    {% include 'components/best_support.html' %}
+    <!--End Best Support -->
+
+    <!--Start FAQ'S-->
+    {% include 'components/faqs.html' %}
+    <!--Start FAQ'S-->
+
+<!--- End Page Content -->
+{% endblock %}
+<!-- Extra Scripts Start -->
+{% block extra_scripts%} {% include 'content/home/extra_scripts.html' %} {% endblock %}
+<!-- Extra Scripts End -->
+
+{% block title %} | Linux Reseller Hosting Plans{% endblock %}
+

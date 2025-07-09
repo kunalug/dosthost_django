@@ -1,0 +1,256 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block title %} | {{ blog.title }} {% endblock %}
+
+{% block extra_styles %}
+{% include 'content/blog/extra_styles.html' %}
+{% endblock %}
+
+{% block page_content %}
+<div class="main-content app-content">
+<section>
+    <div class="section banner-4 banner-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-12 text-center">
+                    <div class="">
+                        <p class="mb-3 content-1 h5 text-white">{{ blog.title }} <span class="tx-info-dark"></span></p>
+                        <p class="mb-0 tx-28">{{ blog.content|linebreaks }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-8">
+                <div class="card">
+                    {% if blog.image %}
+                        <img class="card-img-top" src="{{ blog.image.url }}" alt="img">
+                    {% else %}
+                        <img class="card-img-top" src="{% static 'assets/images/blog/1.jpg' %}" alt="img">
+                    {% endif %}
+                    <div class="card-body">
+                        <div class="d-md-flex">
+                            <div class="d-flex me-4 mb-3 mb-md-0 align-items-center">
+                                <img class="avatar rounded-circle me-3" src="{% static 'assets/images/profile/5.jpg' %}" alt="avatar-img">
+                                <div class="pe-3">
+                                    <h6 class="mb-0">Author</h6>
+                                    <p class="tx-muted tx-15 fw-500 mb-0">
+                                        {% if blog.author.get_full_name %}
+                                            {{ blog.author.get_full_name }}
+                                        {% else %}
+                                            {{ blog.author.username }}
+                                        {% endif %}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="d-flex me-4 mb-3 mb-md-0 align-items-center">
+                                <span class="avatar bg-gray-200 rounded-circle tx-muted border me-3"><i class="fe fe-grid"></i></span>
+                                <div class="pe-3">
+                                    <h6 class="mb-0">Categories</h6>
+                                    <p class="tx-muted tx-15 fw-500 mb-0">
+                                        {% for cat in blog.categories.all %}
+                                            {{ cat.name }}{% if not forloop.last %}, {% endif %}
+                                        {% empty %}
+                                            No category
+                                        {% endfor %}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="d-flex me-4 mb-3 mb-md-0 align-items-center">
+                                <span class="avatar bg-gray-200 rounded-circle tx-muted border me-3"><i class="fe fe-calendar"></i></span>
+                                <div class="pe-3">
+                                    <h6 class="mb-0">Date</h6>
+                                    <p class="tx-muted tx-15 fw-500 mb-0">{{ blog.created_at|date:"d/m/Y" }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body pt-3">
+                        <h4>{{ blog.title }}</h4>
+                        <p class="card-text">{{ blog.content|linebreaks }}</p>
+                        <!-- You can add more dynamic fields here -->
+                    </div>
+                </div>
+
+                <!-- Comments Section -->
+                <div class="card mt-4">
+                    <div class="card-body">
+                        <h4 class="card-title">Comments</h4>
+                        <hr>
+                        {% if comments %}
+                            {% for comment in comments %}
+                                <div class="d-flex mb-3">
+                                    <div class="flex-shrink-0 me-3">
+                                        <img class="avatar rounded-circle" src="{% static 'assets/images/profile/1.jpg' %}" alt="{{ comment.author.username }} avatar">
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <h6 class="mt-0">{{ comment.author.username }} <small class="text-muted ms-2">{{ comment.created_at|timesince }} ago</small></h6>
+                                        <p>{{ comment.content|linebreaks }}</p>
+                                    </div>
+                                </div>
+                                {% if not forloop.last %}<hr>{% endif %}
+                            {% endfor %}
+                        {% else %}
+                            <p>No comments yet. Be the first to comment!</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Add Comment Form -->
+                <div class="card mt-4">
+                    <div class="card-body">
+                        <!-- Messages Display for Comment Form -->
+                        {% if messages %}
+                            <div class="mb-3">
+                                {% for message in messages %}
+                                    {% with message_str=message|stringformat:"s" %}
+                                        {% if 'comment' in message_str %}
+                                            <div class="alert alert-{{ message.tags }} alert-dismissible fade show py-2 px-3" role="alert" style="font-size: 0.85rem;">
+                                                {% if 'success' in message.tags %}
+                                                    <i class="bi bi-check-circle me-1"></i>
+                                                {% elif 'error' in message.tags %}
+                                                    <i class="bi bi-exclamation-circle me-1"></i>
+                                                {% elif 'info' in message.tags %}
+                                                    <i class="bi bi-info-circle me-1"></i>
+                                                {% endif %}
+                                                {{ message }}
+                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" style="font-size: 0.7rem;"></button>
+                                            </div>
+                                        {% endif %}
+                                    {% endwith %}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <h4 class="card-title">Leave a Comment</h4>
+                        <hr>
+                        {% if user.is_authenticated %}
+                            <form method="post" class="form-group">
+                                {% csrf_token %}
+                                <div class="mb-3">
+                                    {{ comment_form.content }}
+                                </div>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </form>
+                        {% else %}
+                            <p>Please <a href="{% url 'login' %}?next={{ request.path }}">log in</a> to post a comment.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <!-- Sidebar remains as you wish -->
+            <div class="col-xl-4">
+                <!-- Your existing sidebar content can go here -->
+                 <div class="card">
+                        <div class="card-body">
+                            <form action="{% url 'blogs:blog_search' %}" method="GET" class="form">
+                                {% csrf_token %}
+                                <div class="form-group custom-form-group">
+                                    <input type="text" name="q" class="form-control form-control-lg rounded-pill" placeholder="Find your Blog here..." value="{{ request.GET.q }}">
+                                    <button class="custom-form-btn btn btn-lg btn-primary bg-primary-gradient rounded-pill border-0" type="submit" id="btn-addon">Search</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="">
+                                <p class="h5 mb-4">Recent Posts</p>
+                                {% if recent_posts %}
+                                    {% for post in recent_posts %}
+                                    <div class="row mb-3 mb-xl-0">
+                                        <div class="col-xl-4 col-lg-2 col-md-3 col-sm-4 text-center">
+                                            <a href="{% url 'blogs:blog_detail' post.slug %}">
+                                            {% if post.image %}
+                                                <img src="{{ post.image.url }}" class="img-fluid br-5 w-100" width="120" alt="{{ post.title }}">
+                                            {% else %}
+                                                <img src="{% static 'assets/images/blog/1.jpg' %}" class="img-fluid br-5 w-100" width="120" alt="Default blog image">
+                                            {% endif %}
+                                            </a>
+                                        </div>
+                                        <div class="col-xl-8 col-lg-9 col-md-8 col-sm-8">
+                                            {% if post.categories.all %}
+                                            <span class="badge bg-secondary-transparent tx-secondary me-1 mb-1 mt-3 mt-sm-0">{{ post.categories.all.0.name }}</span>
+                                            {% endif %}
+                                            <h6 class="mb-0"><a href="{% url 'blogs:blog_detail' post.slug %}">{{ post.title|truncatechars:30 }}</a></h6>
+                                            <p class="tx-muted mb-0">{{ post.created_at|date:"M d, Y" }}</p>
+                                        </div>
+                                    </div>
+                                    {% if not forloop.last %}<hr class="my-3">{% endif %}
+                                    {% endfor %}
+                                {% else %}
+                                    <p>No recent posts found.</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                    <div class="card-body">
+                        <p class="h5 mb-4">Tags</p>
+                        <div class="tags">
+                            {% if tags %}
+                                {% for tag in tags %}
+                                    <a href="{% url 'blogs:blog_tag' tag.slug %}" class="tag">{{ tag.name }}</a>
+                                {% endfor %}
+                            {% else %}
+                                <span class="tx-muted">No tags found.</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card bg-primary-transparent feature-card-14 overflow-hidden">
+                    <div class="card-body">
+                            <!-- Messages Display for Subscription Form -->
+                            {% if messages %}
+                                <div class="mb-3">
+                                    {% for message in messages %}
+                                        {% with message_str=message|stringformat:"s" %}
+                                            {% if 'comment' not in message_str %}
+                                                <div class="alert alert-{{ message.tags }} alert-dismissible fade show py-2 px-3" role="alert" style="font-size: 0.85rem;">
+                                                    {% if message.tags == 'success' %}
+                                                        <i class="bi bi-check-circle me-1"></i>
+                                                    {% elif message.tags == 'error' %}
+                                                        <i class="bi bi-exclamation-circle me-1"></i>
+                                                    {% elif message.tags == 'info' %}
+                                                        <i class="bi bi-info-circle me-1"></i>
+                                                    {% endif %}
+                                                    {{ message }}
+                                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close" style="font-size: 0.7rem;"></button>
+                                                </div>
+                                            {% endif %}
+                                        {% endwith %}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            <form action="{% url 'subscribe' %}" method="POST" class="form mb-4">
+                            {% csrf_token %} 
+                        <h5 class="fw-semibold text-white">NEVER MISS A POST !</h5>
+                        <P class="text-white">Signup for free to get the latest posts.</P>
+                        <div class="input-group">
+                            <input type="email" class="form-control border-0" id="email" name="email"placeholder="Enter your email id">
+                            <button type="submit" class="btn btn-info-dark">Subscribe<i class="fa fa-paper-plane ms-2 tx-11"></i></button>
+                        </div>
+                        </form>
+            </div>
+        </div>
+    </div>
+</section>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<!-- Blog specific JavaScript -->
+<script>
+    // Add any blog-specific JavaScript here
+    console.log('Blog detail page loaded');
+</script>
+{% include 'content/blog/extra_scripts.html' %}
+{% endblock %}

@@ -1,0 +1,281 @@
+{% load static %}
+
+<!-- ============================ js Start =============================== -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Image Upload Preview
+        document.getElementById('imageUpload').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                // Validate file type
+                const validTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+                if (!validTypes.includes(file.type)) {
+                    alert('Please select a valid image file (JPEG, JPG, or PNG)');
+                    return;
+                }
+                
+                // Validate file size (max 5MB)
+                if (file.size > 5 * 1024 * 1024) {
+                    alert('File size must be less than 5MB');
+                    return;
+                }
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const preview = document.getElementById('imagePreview');
+                    preview.style.backgroundImage = `url(${e.target.result})`;
+                    preview.innerHTML = '';
+                    
+                    // Update sidebar profile image
+                    const sidebarImg = document.querySelector('.profile-img');
+                    sidebarImg.style.backgroundImage = `url(${e.target.result})`;
+                    sidebarImg.innerHTML = '';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Password Toggle
+        document.querySelectorAll('.password-toggle').forEach(toggle => {
+            toggle.addEventListener('click', function() {
+                const targetId = this.getAttribute('data-target');
+                const targetInput = document.getElementById(targetId);
+                
+                if (targetInput.type === 'password') {
+                    targetInput.type = 'text';
+                    this.classList.remove('fa-eye');
+                    this.classList.add('fa-eye-slash');
+                } else {
+                    targetInput.type = 'password';
+                    this.classList.remove('fa-eye-slash');
+                    this.classList.add('fa-eye');
+                }
+            });
+        });
+
+        // Form validation and submission
+        document.getElementById('profileForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = {
+                fullName: document.getElementById('fullName').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                department: document.getElementById('department').value,
+                designation: document.getElementById('designation').value,
+                language: document.getElementById('language').value,
+                bio: document.getElementById('bio').value
+            };
+            
+            // Update sidebar info
+            updateSidebarInfo(formData);
+            
+            // Show success message
+            showMessage('Profile updated successfully!', 'success');
+        });
+
+        document.getElementById('passwordForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const currentPassword = document.getElementById('currentPassword').value;
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            // Validate passwords
+            if (newPassword.length < 8) {
+                showMessage('New password must be at least 8 characters long', 'error');
+                return;
+            }
+            
+            if (newPassword !== confirmPassword) {
+                showMessage('New password and confirm password do not match', 'error');
+                return;
+            }
+            
+            // Here you would typically send the data to your server
+            showMessage('Password updated successfully!', 'success');
+            
+            // Clear form
+            this.reset();
+        });
+
+        // Cancel buttons
+        document.getElementById('cancelBtn').addEventListener('click', function() {
+            document.getElementById('profileForm').reset();
+            // Reset to original values
+            document.getElementById('fullName').value = 'Will Jonto';
+            document.getElementById('email').value = 'willjontoax@gmail.com';
+            document.getElementById('phone').value = '(1) 2536 2561 2365';
+            document.getElementById('department').value = 'design';
+            document.getElementById('designation').value = 'ui-ux-designer';
+            document.getElementById('language').value = 'english';
+            document.getElementById('bio').value = 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.';
+        });
+
+        document.getElementById('cancelPasswordBtn').addEventListener('click', function() {
+            document.getElementById('passwordForm').reset();
+        });
+
+        // Notification settings
+        document.getElementById('saveNotificationsBtn').addEventListener('click', function() {
+            const notifications = {
+                companyNews: document.getElementById('companyNews').checked,
+                pushNotifications: document.getElementById('pushNotifications').checked,
+                weeklyLetters: document.getElementById('weeklyLetters').checked,
+                meetups: document.getElementById('meetups').checked,
+                orderNotifications: document.getElementById('orderNotifications').checked
+            };
+            
+            // Here you would typically save to server
+            showMessage('Notification settings saved successfully!', 'success');
+        });
+
+        document.getElementById('resetNotificationsBtn').addEventListener('click', function() {
+            // Reset to default values
+            document.getElementById('companyNews').checked = false;
+            document.getElementById('pushNotifications').checked = true;
+            document.getElementById('weeklyLetters').checked = true;
+            document.getElementById('meetups').checked = false;
+            document.getElementById('orderNotifications').checked = true;
+        });
+
+        // Helper functions
+        function updateSidebarInfo(data) {
+            const infoItems = document.querySelectorAll('.user-info-value');
+            infoItems[0].textContent = `: ${data.fullName}`;
+            infoItems[1].textContent = `: ${data.email}`;
+            infoItems[2].textContent = `: ${data.phone}`;
+            infoItems[3].textContent = `: ${data.department.charAt(0).toUpperCase() + data.department.slice(1)}`;
+            infoItems[4].textContent = `: ${document.getElementById('designation').options[document.getElementById('designation').selectedIndex].text}`;
+            infoItems[5].textContent = `: ${data.language.charAt(0).toUpperCase() + data.language.slice(1)}`;
+            infoItems[6].textContent = `: ${data.bio}`;
+            
+            // Update header info
+            document.querySelector('.profile-name').textContent = data.fullName;
+            document.querySelector('.profile-email').textContent = data.email;
+        }
+
+        function showMessage(message, type) {
+            // Create alert element
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type === 'success' ? 'success' : 'danger'} alert-dismissible fade show position-fixed`;
+            alertDiv.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px;';
+            alertDiv.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            
+            document.body.appendChild(alertDiv);
+            
+            // Auto remove after 3 seconds
+            setTimeout(() => {
+                if (alertDiv && alertDiv.parentNode) {
+                    alertDiv.parentNode.removeChild(alertDiv);
+                }
+            }, 3000);
+        }
+
+        // Add smooth transitions for tab switches
+        document.querySelectorAll('[data-bs-toggle="pill"]').forEach(tab => {
+            tab.addEventListener('shown.bs.tab', function(e) {
+                // Add any tab-specific logic here
+            });
+        });
+    </script>
+
+ <script>
+        // Payment method selection
+        document.querySelectorAll('.payment-method').forEach(method => {
+            method.addEventListener('click', function() {
+                document.querySelectorAll('.payment-method').forEach(m => m.classList.remove('selected'));
+                this.classList.add('selected');
+                
+                const radio = this.querySelector('input[type="radio"]');
+                radio.checked = true;
+                
+                const cardInfo = document.getElementById('cardInfo');
+                if (radio.value === 'card') {
+                    cardInfo.classList.add('active');
+                } else {
+                    cardInfo.classList.remove('active');
+                }
+            });
+        });
+
+        // Card number formatting
+        document.getElementById('cardNumber').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\s/g, '');
+            let formattedValue = value.match(/.{1,4}/g)?.join(' ') || value;
+            e.target.value = formattedValue;
+        });
+
+        // Expiry date formatting
+        document.getElementById('expiryDate').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length >= 2) {
+                value = value.substring(0, 2) + '/' + value.substring(2, 4);
+            }
+            e.target.value = value;
+        });
+
+        // Promo code application
+        function applyPromo() {
+            const promoCode = document.getElementById('promoCode').value.trim();
+            const discountElement = document.getElementById('discount');
+            const totalElement = document.getElementById('finalTotal');
+            
+            if (promoCode.toLowerCase() === 'save20') {
+                discountElement.textContent = '-$44.77';
+                totalElement.textContent = '$197.01';
+                alert('Promo code applied! You saved $44.77');
+            } else if (promoCode) {
+                alert('Invalid promo code');
+            }
+        }
+
+        // Form submission
+        function processPayment() {
+            const form = document.getElementById('checkoutForm');
+            const requiredFields = form.querySelectorAll('input[required], select[required]');
+            let isValid = true;
+            
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    field.style.borderColor = '#e74c3c';
+                    isValid = false;
+                } else {
+                    field.style.borderColor = '#ddd';
+                }
+            });
+            
+            if (isValid) {
+                // If client-side validation passes, allow the form to submit naturally.
+                // The following simulation code is commented out as Django will handle the actual submission.
+                // const btn = document.querySelector('.checkout-btn');
+                // btn.textContent = 'Processing...';
+                // btn.disabled = true;
+                
+                // setTimeout(() => {
+                //     alert('Order placed successfully! You will receive a confirmation email shortly.');
+                //     btn.textContent = 'Complete Order';
+                //     btn.disabled = false;
+                // }, 2000);
+                form.submit(); // Explicitly submit if validation passes and we want to keep this JS function active.
+                               // OR, if the button is type="submit", this whole function might not be needed if onclick is removed.
+            } else {
+                alert('Please fill in all required fields');
+            }
+        }
+
+        // Form validation on input
+        document.querySelectorAll('input[required], select[required]').forEach(field => {
+            field.addEventListener('blur', function() {
+                if (!this.value.trim()) {
+                    this.style.borderColor = '#e74c3c';
+                } else {
+                    this.style.borderColor = '#ddd';
+                }
+            });
+        });
+    </script>

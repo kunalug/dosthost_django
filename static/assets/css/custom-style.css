@@ -1,0 +1,12 @@
+.profile-container {
+    display: flex;
+}
+
+.profile-container > div:first-child {
+    flex: 1;
+    margin-right: 1rem;
+}
+
+.profile-container > div:last-child {
+    flex: 2;
+}

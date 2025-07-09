@@ -1,0 +1,110 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-nav-layout="horizontal" data-nav-style="menu-hover" data-theme-mode="light">
+
+<head>
+
+    <!-- META DATA -->
+    <meta charset="UTF-8">
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=0'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="author" content="Spruko Technologies Private Limited">
+    <meta name="keywords"
+        content="web hosting, hosting, VPS, dedicated servers, cloud hosting, shared hosting, DostHost, website hosting, domain registration, India hosting, affordable hosting, fast hosting, secure hosting, managed hosting, business hosting, SSD hosting, cPanel hosting, email hosting, reseller hosting, best web hosting, gurugram hosting, Haryana hosting, India domains">
+
+    <!-- TITLE -->
+    <title>DostHost{% block title %}{% endblock %}</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="{% if site_logo and site_logo.favicon %}{{ site_logo.favicon.url }}{% else %}{% static 'assets/images/brand/dosthost.ico' %}{% endif %}" type="image/x-icon">
+    
+    <!-- ==================== Global Style Start ==================== -->
+    {% include 'global_styles.html' %}
+    <!-- ==================== Global Style End ==================== -->
+
+    <!-- ==================== css Code Include Start ==================== -->
+    <link rel="stylesheet" href="{% static 'assets/css/styles.css' %}">
+    <!-- ==================== css Code Include End ==================== -->
+
+    <!-- ==================== Extra CSS Start ==================== -->
+    {% block extra_styles %}{% endblock %}
+    <!-- ==================== Extra CSS End ==================== -->
+
+    <!-- ==================== Custom CSS Start ==================== -->
+    <link rel="stylesheet" href="{% static 'assets/css/styles.css' %}">
+    <!-- ==================== Custom CSS End ==================== -->
+<link rel="stylesheet" href="{% static 'assets/css/custom-style.css' %}">
+<!-- SEO Meta Tags -->
+    <meta name="description" content="DostHost - Your Trusted Partner for Effortless Web Hosting. Experience Unmatched Reliability and Friendly Support!">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="DostHost{% block og_title %}{% endblock %}">
+    <meta property="og:description" content="DostHost - Your Trusted Partner for Effortless Web Hosting. Experience Unmatched Reliability and Friendly Support!">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://dost.host/">
+    <meta property="og:image" content="{% if site_logo and site_logo.footer_logo %}{{ site_logo.footer_logo.url }}{% else %}{% static 'assets/images/brand/dosthost-logo.png' %}{% endif %}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="DostHost{% block twitter_title %}{% endblock %}">
+    <meta name="twitter:description" content="DostHost - Your Trusted Partner for Effortless Web Hosting. Experience Unmatched Reliability and Friendly Support!">
+    <meta name="twitter:image" content="{% if site_logo and site_logo.footer_logo %}{{ site_logo.footer_logo.url }}{% else %}{% static 'assets/images/brand/dosthost-logo.png' %}{% endif %}">
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://dost.host/">
+    <!-- Structured Data (Organization) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "DostHost",
+      "url": "https://dost.host/",
+      "logo": "{% if site_logo and site_logo.footer_logo %}{{ site_logo.footer_logo.url }}{% else %}{% static 'assets/images/brand/dosthost-logo.png' %}{% endif %}",
+      "contactPoint": [{
+        "@type": "ContactPoint",
+        "telephone": "+91-9650865885",
+        "contactType": "customer service",
+        "email": "info@dost.host"
+      }],
+      "sameAs": [
+        {% if footer_links.facebook_url %}"{{ footer_links.facebook_url }}",{% endif %}
+        {% if footer_links.linkedin_url %}"{{ footer_links.linkedin_url }}",{% endif %}
+        {% if footer_links.instagram_url %}"{{ footer_links.instagram_url }}",{% endif %}
+        {% if footer_links.twitter_url %}"{{ footer_links.twitter_url }}"{% endif %}
+      ]
+    }
+    </script>
+    <!-- End SEO Meta Tags -->
+</head>
+    <!-- ==========Head End========== -->
+<body class="main-body light-theme {% block body_class %}{% endblock %}">
+    <!-- ==================== Header Start ==================== -->
+    {% include 'header.html' %}
+    <!-- ==================== Header End ==================== -->
+
+    <!-- ==================== Main Content Start ==================== -->
+    {% block page_content %}
+    <div class="main-content app-content">
+        {% if messages %}
+        {% for message in messages%}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+    {% endblock %}
+    <!-- ==================== End Main Content ==================== -->
+
+    <!-- ==================== Footer Start ==================== -->
+    {% include 'footer.html' %}
+    <!-- ==================== Footer End ==================== -->
+
+    <!-- ==================== Global Scripts Start ==================== -->
+    {% include 'global_scripts.html' %}
+    <!-- ==================== Global Scripts End ==================== -->
+
+    <!-- ==================== Extra JS Start ==================== -->
+    {% block extra_scripts %}{% endblock %}
+    <!-- ==================== Extra JS End ==================== -->
+
+    {% include 'components/live_chat.html' %}
+    </body>
+</html>

@@ -1,0 +1,51 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+<!-- Start Extra Styles -->
+{% block extra_styles %} {% include 'content/wordpress_shared_hosting/extra_styles.html' %} {% endblock %}
+<!-- End Extra Styles -->
+
+<!--- Start Page Content -->
+{% block page_content %}
+<!-- Page Content -->
+
+<!-- Start banner Content -->
+{% include 'content/wordpress_shared_hosting/banner.html' %}
+<!-- End banner Content -->
+ 
+<!--Start Plans-->
+{% include 'content/linux_shared_hosting/plans.html' %}
+<!--End Plans-->
+
+
+<!-- Start Features Section -->
+{% include 'content/wordpress_shared_hosting/features.html' %}
+<!-- End Features Section -->
+
+<!-- Start Protection Section -->
+{% include 'content/wordpress_shared_hosting/protection.html' %}
+<!-- End Protection Section -->
+
+<!-- Start WordPress Features Section -->
+{% include 'content/wordpress_shared_hosting/features2.html' %}
+<!-- End WordPress Features Section -->
+
+<!-- Start Hosting Section -->
+{% include 'content/wordpress_shared_hosting/hosting.html' %}
+<!-- End Hosting Section -->
+
+<!--Start Best Support -->
+{% include 'components/best_support.html' %}
+<!--End Best Support -->
+
+<!--Start FAQ'S-->
+{% include 'components/faqs.html' %}
+<!--Start FAQ'S-->
+
+<!--- End Page Content -->
+{% endblock %}
+<!-- Extra Scripts Start -->
+{% block extra_scripts%} {% include 'content/wordpress_shared_hosting/extra_scripts.html' %} {% endblock %}
+<!-- Extra Scripts End -->
+
+{% block title %} | WordPress Shared Hosting Plans{% endblock %}

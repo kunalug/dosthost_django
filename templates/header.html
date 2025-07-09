@@ -1,0 +1,397 @@
+{% load static %} 
+    <!-- Back-to-top -->
+    <a href="#top" id="back-to-top" class="back-to-top rounded-circle shadow all-ease-03 fade-in">
+        <i class="fe fe-arrow-up"></i>
+    </a>
+
+    <div class="page">
+
+        
+        <div class="head_menu_container">
+            <header class="top-menu">
+                <div class="container top-menu-brand px-0">
+    
+                    <ul class="nav list-unstyled align-items-center">
+                        <li><a href="javascript:void(0);" onclick="Tawk_API.toggle()" class="nav-link d-flex"><i
+                                    class="bi bi-headset me-2"></i>24x7 Technical Support</a></li>
+                        <li>
+                            <a href="mailto:info@dost.host" class="nav-link"><i class="bi bi-envelope-plus me-2"></i>info@dost.host</a>
+                        </li>
+                    </ul>
+    
+                    <ul class="nav list-unstyled align-items-center">
+                        <li>
+                            <a href="{% url 'contact' %}" class="nav-link d-flex"><i class="bi bi-person me-2"></i>Contact</a>
+                        </li>
+                    </ul>
+                </div>
+            </header>
+            <header class="main-header" id="stickyHeader">
+    
+                <!-- Start::main-brand-header -->
+                <div class="main-brand-header">
+                    <div class="container brand-header-container">    
+                        <div class="d-flex align-items-center">
+                            <!-- Start::header-element -->
+                            <div class="header-element me-1">
+                                <!-- Start::header-link -->
+                                <a href="javascript:void(0);" class="sidemenu-toggle1 header-link" data-bs-toggle="sidebar">
+                                    <span class="open-toggle">
+                                        <i class="bi bi-text-indent-left header-link-icon"></i>
+                                    </span>
+                                </a>
+                                <!-- End::header-link -->
+                            </div>
+                            <!-- End::header-element -->
+                            <a href="{% url 'home' %}" class="brand-main">
+                                {% if site_logo %}
+                                    <!-- Desktop Logo - Dark Theme -->
+                                    {% if site_logo.desktop_logo %}
+                                        <img src="{{ site_logo.desktop_logo.url }}" alt="{{ site_logo.name }}" class="desktop-logo logo-dark">
+                                    {% elif site_logo.image %}
+                                        <img src="{{ site_logo.image.url }}" alt="{{ site_logo.name }}" class="desktop-logo logo-dark">
+                                    {% else %}
+                                        <img src="{% static 'assets/images/brand/dosthost-logo.png' %}" alt="img" class="desktop-logo logo-dark">
+                                    {% endif %}
+                                    
+                                    <!-- Mobile Logo - Dark Theme -->
+                                    {% if site_logo.mobile_logo %}
+                                        <img src="{{ site_logo.mobile_logo.url }}" alt="{{ site_logo.name }}" class="mobile-logo mobile-dark mx-3" style="max-width: 150px !important;">
+                                    {% elif site_logo.image %}
+                                        <img src="{{ site_logo.image.url }}" alt="{{ site_logo.name }}" class="mobile-logo mobile-dark mx-3" style="max-width: 150px !important;">
+                                    {% else %}
+                                        <img src="{% static 'assets/images/brand/dosthost-mobile.png' %}" alt="img" class="mobile-logo mobile-dark mx-3" style="max-width: 150px !important;">
+                                    {% endif %}
+                                    
+                                    <!-- Desktop Logo - Color Theme -->
+                                    {% if site_logo.desktop_logo %}
+                                        <img src="{{ site_logo.desktop_logo.url }}" alt="{{ site_logo.name }}" class="desktop-logo logo-color">
+                                    {% elif site_logo.image %}
+                                        <img src="{{ site_logo.image.url }}" alt="{{ site_logo.name }}" class="desktop-logo logo-color">
+                                    {% else %}
+                                        <img src="{% static 'assets/images/brand/dosthost-logo.png' %}" alt="img" class="desktop-logo logo-color">
+                                    {% endif %}
+                                    
+                                    <!-- Mobile Logo - Color Theme -->
+                                    {% if site_logo.mobile_logo %}
+                                        <img src="{{ site_logo.mobile_logo.url }}" alt="{{ site_logo.name }}" class="mobile-logo mobile-color" style="max-width: 150px !important;">
+                                    {% elif site_logo.image %}
+                                        <img src="{{ site_logo.image.url }}" alt="{{ site_logo.name }}" class="mobile-logo mobile-color" style="max-width: 150px !important;">
+                                    {% else %}
+                                        <img src="{% static 'assets/images/brand/dosthost-mobile.png' %}" alt="img" class="mobile-logo mobile-color" style="max-width: 150px !important;">
+                                    {% endif %}
+                                {% else %}
+                                    <!-- Fallback to static images if no logo is available -->
+                                    <img src="{% static 'assets/images/brand/dosthost-logo.png' %}" alt="img" class="desktop-logo logo-dark">
+                                    <img src="{% static 'assets/images/brand/dosthost-mobile.png' %}" alt="img" class="mobile-logo mobile-dark mx-3" style="max-width: 150px !important;">
+                                    <img src="{% static 'assets/images/brand/dosthost-logo.png' %}" alt="img" class="desktop-logo logo-color">
+                                    <img src="{% static 'assets/images/brand/dosthost-mobile.png' %}" alt="img" class="mobile-logo mobile-color" style="max-width: 150px !important;">
+                                {% endif %}
+                            </a>
+                            <ul class="categories-dropdowns">
+                                <li class="category-dropdown px-2 py-3">
+                                    <a href="javascript:void(0);" class="avatar bg-white-1 border rounded-circle tx-15 border-white-2 categorydropdown" onclick="toggleDropdown(this)">
+                                        <i class="bi bi-grid text-white"></i>
+                                    </a>
+                                    <ul class="main-dropdown" id="dropdown-toggle">
+                                        <li>
+                                            <div class="categories-dropdowns__item">
+                                                <span class="me-1"><i class="bi bi-cast tx-17"></i></span>
+                                                Web Hosting
+                                                <span class="float-end"><i class="bi bi-chevron-right tx-11"></i></span>
+                                            </div>
+                                            <ul class="category-menu"> 
+                                                <li><a href="{% url 'linux-shared-hosting' %}" class="category-item">Linux Shared Hosting</a></li>
+                                                <li><a href="{% url 'wordpress-shared-hosting' %}" class="category-item">Wordpress Shared Hosting</a></li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <div class="categories-dropdowns__item">
+                                                <span class="me-1"><i class="bi bi-layers tx-17"></i></span>
+                                                Reseller Hosting
+                                                <span class="float-end"><i class="bi bi-chevron-right tx-11"></i></span>
+                                            </div>
+                                            <ul class="category-menu">
+                                                <li><a href="{% url 'linux-reseller-hosting' %}" class="category-item">Linux Reseller Hosting</a></li>
+                                                <li><a href="{% url 'wordpress-reseller-hosting' %}" class="category-item">Wordpress Reseller Hosting</a></li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <div class="categories-dropdowns__item">
+                                                <span class="me-1"><i class="bi bi-hdd-network tx-17"></i></span>
+                                                Servers
+                                                <span class="float-end"><i class="bi bi-chevron-right tx-11"></i></span>
+                                            </div>
+                                            <ul class="category-menu">
+                                                <li><a href="{% url 'linux-vps' %}" class="category-item">Linux VPS</a></li>
+                                                <li><a href="{% url 'dedicated-servers' %}" class="category-item">Dedicated Servers</a></li>                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <ul class="nav list-unstyled align-items-center">
+                            <li class="d-flex align-items-center position-relative me-md-4 me-2">
+                                <a href="tel:+91-9650865885" class="stretched-link"></a>
+                                <span class="avatar bg-white-1 border rounded-circle tx-15 border-white-2 me-2"><i class="bi bi-telephone text-white"></i></span>
+                                <div class="d-none d-md-block">
+                                    <a href="javascript:void(0);" class="nav-link tx-15 p-0">Call to Us</a>
+                                    <a href="tel:+91-9650865885" class="mb-0 nav-link p-0 tx-13 op-8 lh-sm">+91-9650865885</a>
+                                </div>
+                            </li>
+                            <li class="d-flex align-items-center position-relative">
+                                <a href="javascript:void(0);" onclick="Tawk_API.toggle()" class="stretched-link"></a>
+                                <span class="avatar bg-white-1 border rounded-circle tx-15 border-white-2 me-2"><i class="bi bi-chat-text text-white"></i></span>
+                                <div class="d-none d-md-block">
+                                    <a href="javascript:void(0);" onclick="Tawk_API.toggle()" class="nav-link tx-15 p-0">Live Chat</a>
+                                    <p href="javascript:void(0);" onclick="Tawk_API.toggle()" class="mb-0 nav-link p-0 tx-13 op-8 lh-sm">Chat With Us</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- End::main-brand-header -->
+    
+            </header>
+            <div class="sticky">
+                <!-- Start::app-sidebar -->
+                <aside class="app-sidebar" id="sidebar">
+    
+                    <div class="app-toggle-header">                
+                        <div class="header-element">
+                            <!-- Start::header-link -->
+                            <a href="javascript:void(0);" class="sidemenu-toggle header-link" data-bs-toggle="sidebar">
+                                <span class="close-toggle">
+                                    <i class="bi bi-x header-link-icon"></i>
+                                </span>
+                            </a>
+                            <!-- End::header-link -->
+                        </div>
+                        <!-- End::header-element -->
+                        <a href="{% url 'home' %}" class="brand-main">
+                            {% if site_logo.sidebar_logo %}
+                                <img src="{{ site_logo.sidebar_logo.url }}" alt="{{ site_logo.name }}" class="desktop-logo logo-dark">
+                                <img src="{{ site_logo.sidebar_logo.url }}" alt="{{ site_logo.name }}" class="desktop-logo logo-color">
+                            {% else %}
+                                <img src="{% static 'assets/images/brand/dosthost-logo.png' %}" alt="img" class="desktop-logo logo-dark">
+                                <img src="{% static 'assets/images/brand/dosthost-logo.png' %}" alt="img" class="desktop-logo logo-color">
+                            {% endif %}
+                        </a>
+                    </div>
+    
+                    <!-- Start::main-sidebar -->
+                    <div class="main-sidebar container" id="sidebar-scroll">
+    
+                        <!-- Start::nav -->
+                        <nav class="main-menu-container nav nav-pills sub-open">
+                            <ul class="main-menu">
+
+                                <!-- Start::slide -->
+                                <li class="slide">
+                                    <a href="{% url 'home' %}" class="side-menu__item">
+                                        <span class="side-menu__label">Home</span>
+    
+                                    </a>
+                                </li>
+                                <!-- End::slide -->
+
+                                <!-- Start::slide -->
+                                <li class="slide">
+                                    <a href="{% url 'about' %}" class="side-menu__item">
+                                        <span class="side-menu__label">About Us</span>
+    
+                                    </a>
+                                </li>
+                                <!--End::slide-->
+
+                                <!-- Start::slide -->
+                                <li class="slide">
+                                    <a href="{% url 'blogs:blog_list' %}" class="side-menu__item">
+                                        <span class="side-menu__label">Blog</span>
+    
+                                    </a>
+                                </li>
+                                <!-- End::slide -->
+    
+                                <!-- Start::slide -->
+                                <li class="slide has-sub">
+                                    <a class="side-menu__item">
+                                        <span class="side-menu__label">Hosting</span>
+                                        <i class="fe fe-chevron-down side-menu__angle"></i>
+    
+                                    </a>
+                                    <ul class="slide-menu child1 mega-slide-menu mega-slide-menu-onefr without-icon">
+                                        <li class="mega-menu">
+                                            <div class="">
+                                                <ul>
+                                                    <li>
+                                                        <p class="mb-3 d-flex align-items-center menu-label">
+                                                            <i class="bi bi-hdd-rack tx-primary tx-18 me-2"></i>
+                                                            <span class="tx-14 tx-primary">Shared Hosting</span>
+                                                        </p>
+                                                    </li>
+                                                    <li class="slide">
+                                                        <a href="{% url 'linux-shared-hosting' %}" class="side-menu__item">
+                                                            <div class="d-lg-flex align-items-start">
+                                                                <div class="me-3">
+                                                                    <span
+                                                                        class="avatar header__dropavatar mb-2 bg-secondary-transparent rounded-circle">
+                                                                        <i class="bi bi-database me-0 tx-secondary"></i>
+                                                                    </span>
+                                                                </div>
+                                                                <div class="flex-grow-1">
+                                                                    <h6 class="d-block mb-1">Linux Shared Hosting</h6>
+                                                                    <span class="tx-default tx-14">Perfect for smaller websites and
+                                                                        blogs. Comes with cPanel, PHP, Apache and more.</span>
+                                                                </div>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li class="slide">
+                                                        <a href="{% url 'wordpress-shared-hosting' %}" class="side-menu__item">
+                                                            <div class="d-lg-flex align-items-start">
+                                                                <div class="me-3">
+                                                                    <span
+                                                                        class="avatar header__dropavatar mb-2 rounded-circle bg-purple-transparent">
+                                                                        <i class="bi bi-wordpress me-0 tx-purple"></i>
+                                                                    </span>
+                                                                </div>
+                                                                <div class="flex-grow-1">
+                                                                    <h6 class="d-block mb-1">Wordpress Shared
+                                                                        Hosting</h6>
+                                                                    <span class="tx-default tx-14">A secure, reliable and powerful
+                                                                        platform crafter for wordpress.</span>
+                                                                </div>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="">
+                                                <ul>
+                                                    <li>
+                                                        <p class="mb-3 d-flex align-items-center menu-label">
+                                                            <i class="bi bi-hdd-network tx-primary tx-18 me-2"></i>
+                                                            <span class="tx-14 tx-primary">Servers</span>
+                                                        </p>
+                                                    </li>
+                                                    <li class="slide">
+                                                        <a href="{% url 'linux-vps' %}" class="side-menu__item">
+                                                            <div class="d-lg-flex align-items-start">
+                                                                <div class="me-3">
+                                                                    <span
+                                                                        class="avatar header__dropavatar mb-2 rounded-circle bg-pink-transparent">
+                                                                        <i class="bi bi-hdd-stack me-0 tx-pink"></i>
+                                                                    </span>
+                                                                </div>
+                                                                <div class="flex-grow-1">
+                                                                    <h6 class="d-block mb-1">Linux VPS</h6>
+                                                                    <span class="tx-default tx-14">With Hypervisor implementation
+                                                                        for a cost effective dedicated server experience.</span>
+                                                                </div>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li class="slide">
+                                                        <a href="{% url 'dedicated-servers' %}" class="side-menu__item">
+                                                            <div class="d-lg-flex align-items-start">
+                                                                <div class="me-3">
+                                                                    <span
+                                                                        class="avatar header__dropavatar mb-2 rounded-circle bg-primary-transparent">
+                                                                        <i class="bi bi-hdd-network me-0 tx-primary"></i>
+                                                                    </span>
+                                                                </div>
+                                                                <div class="flex-grow-1">
+                                                                    <h6 class="d-block mb-1">Dedicated Servers</h6>
+                                                                    <span class="tx-default tx-14">Dedicated hardware and rock-solid
+                                                                        performance. Perfect for larger websites and apps.</span>
+                                                                </div>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="">
+                                                <ul>
+                                                    <li>
+                                                        <p class="mb-3 d-flex align-items-center menu-label">
+                                                            <i class="bi bi-hdd-stack tx-primary tx-18 me-2"></i>
+                                                            <span class="tx-14 tx-primary">Reseller Hosting</span>
+                                                        </p>
+                                                    </li>
+                                                    <li class="slide">
+                                                        <a href="{% url 'linux-reseller-hosting' %}" class="side-menu__item">
+                                                            <div class="d-lg-flex align-items-start">
+                                                                <div class="me-3">
+                                                                    <span
+                                                                        class="avatar header__dropavatar mb-2 rounded-circle bg-warning-transparent">
+                                                                        <i class="bi bi-diagram-3 me-0 tx-warning"></i>
+                                                                    </span>
+                                                                </div>
+                                                                <div class="flex-grow-1">
+                                                                    <h6 class="d-block mb-1">Linux Reseller Hosting</h6>
+                                                                    <span class="tx-default tx-14">Start your hosting business today.
+                                                                        Comes with free WHM, cPanel and WHMCS.</span>
+                                                                </div>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li class="slide">
+                                                        <a href="{% url 'wordpress-reseller-hosting' %}" class="side-menu__item">
+                                                            <div class="d-lg-flex align-items-start">
+                                                                <div class="me-3">
+                                                                    <span
+                                                                        class="avatar header__dropavatar mb-2 rounded-circle bg-teal-transparent">
+                                                                        <i class="bi bi-wordpress me-0 tx-teal"></i>
+                                                                    </span>
+                                                                </div>
+                                                                <div class="flex-grow-1">
+                                                                    <h6 class="d-block mb-1">Wordpress Reseller
+                                                                        Hosting</h6>
+                                                                    <span class="tx-default tx-14">A secure, reliable and powerful reseller hosting for wordpress.</span>
+                                                                </div>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="">
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <!-- End::slide -->
+
+                                <!-- Start::slide -->
+                                <li class="slide">
+                                    <a href="{% url 'faqs' %}" class="side-menu__item">
+                                        <span class="side-menu__label">FAQ's</span>
+    
+                                    </a>
+                                </li>
+                              
+                               
+                            </ul>
+                            <div class="d-xl-flex d-lg-none d-grid gap-2 text-center">
+                                {% if user.is_authenticated %}
+                                <!-- User is logged in - show Dashboard button only -->
+                                <a href="{% url 'dashboard' %}" class="btn btn-secondary min-w-fit-content">
+                                     Dashboard - Hi, {{ user.first_name|default:user.username }}!
+                                </a>
+                                <a href="{% url 'logout' %}" class="btn btn-outline-light login-btn min-w-fit-content">Logout</a>
+                                {% else %}
+                                    <!-- User is not logged in - show Login button that redirects smartly -->
+                                    <a href="{% url 'register_view' %}" class="btn btn-secondary min-w-fit-content">Register</a>
+                                    <a href="{% url 'login' %}" class="btn btn-outline-light login-btn min-w-fit-content">Login</a>
+                                {% endif %}
+                            </div>
+                        </nav>
+                        <!-- End::nav -->
+    
+                    </div>
+                    <!-- End::main-sidebar -->
+    
+                </aside>
+                <!-- End::app-sidebar -->
+            </div>
+        </div>

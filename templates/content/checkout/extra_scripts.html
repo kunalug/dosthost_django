@@ -1,0 +1,164 @@
+<!-- Load Razorpay script -->
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const paymentMethods = document.querySelectorAll('.payment-method input[name="payment_method"]');
+    const cardInfoDiv = document.getElementById('cardInfo');
+
+    paymentMethods.forEach(radio => {
+        radio.addEventListener('change', function () {
+            // Remove 'selected' class from all parent divs
+            document.querySelectorAll('.payment-method').forEach(pm => pm.classList.remove('selected'));
+            // Add 'selected' class to the parent of the checked radio
+            this.closest('.payment-method').classList.add('selected');
+
+            if (this.value === 'card') {
+                cardInfoDiv.classList.add('active');
+                cardInfoDiv.classList.remove('d-none'); // Ensure it's visible
+            } else {
+                cardInfoDiv.classList.remove('active');
+                cardInfoDiv.classList.add('d-none'); // Hide if not card
+            }
+        });
+    });
+
+    // Initial check in case 'card' is pre-selected
+    const initialPaymentMethod = document.querySelector('input[name="payment_method"]:checked');
+    if (initialPaymentMethod && initialPaymentMethod.value === 'card') {
+        cardInfoDiv.classList.add('active');
+        cardInfoDiv.classList.remove('d-none');
+        initialPaymentMethod.closest('.payment-method').classList.add('selected');
+    } else if (initialPaymentMethod) {
+        cardInfoDiv.classList.remove('active');
+        cardInfoDiv.classList.add('d-none');
+        initialPaymentMethod.closest('.payment-method').classList.add('selected');
+    }
+
+    // Payment form submission handler
+    const form = document.getElementById("checkoutForm");
+    
+    form.addEventListener("submit", async function (e) {
+        const paymentMethodInput = document.querySelector("input[name='payment_method']:checked");
+        
+        if (!paymentMethodInput) {
+            alert("Please select a payment method.");
+            e.preventDefault();
+            return;
+        }
+
+        const paymentMethod = paymentMethodInput.value;
+
+        // If not Razorpay, let the form submit normally
+        if (paymentMethod !== "razorpay") {
+            return;
+        }
+
+        // Prevent default form submission for Razorpay
+        e.preventDefault();
+
+        try {
+            // Show loading state
+            const submitBtn = document.getElementById('complete_order');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Processing...';
+            submitBtn.disabled = true;
+
+            // Prepare form data
+            const formData = new FormData(form);
+            const plainFormData = Object.fromEntries(formData.entries());
+
+            const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+            // Send request to server
+            const response = await fetch(form.action, {
+                method: "POST",
+                headers: {
+                    "X-CSRFToken": csrfToken,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(plainFormData)
+            });
+
+            const result = await response.json();
+
+            // Reset button state
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+
+            if (result.status === "razorpay_ready") {
+                // Initialize Razorpay
+                const rzp = new Razorpay({
+                    key: result.rzp_key_id,
+                    amount: result.amount,
+                    currency: result.currency,
+                    name: "DostHost",
+                    description: `Payment for Order #${result.order_id}`,
+                    order_id: result.rzp_order_id,
+                    callback_url: result.callback_url,
+                    prefill: {
+                        name: result.prefill_name,
+                        email: result.prefill_email,
+                        contact: result.prefill_contact
+                    },
+                    notes: {
+                        address: result.notes_address,
+                        django_order_id: result.order_id
+                    },
+                    theme: {
+                        color: "#3399cc"
+                    },
+                    handler: function (rzpResponse) {
+                        fetch("/razorpay-callback/", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                                "X-CSRFToken": csrfToken
+                            },
+                            body: JSON.stringify({
+                                order_id: result.order_id,
+                                razorpay_order_id: rzpResponse.razorpay_order_id,
+                                razorpay_payment_id: rzpResponse.razorpay_payment_id,
+                                razorpay_signature: rzpResponse.razorpay_signature
+                            })
+                        }).then(res => res.json())
+                          .then(data => {
+                              if (data.status === "success") {
+                                  window.location.href = `/thank-you/${result.order_id}/`;
+                              } else {
+                                  alert("❌ Payment verification failed.");
+                              }
+                          });
+                    },
+                    modal: {
+                        ondismiss: function() {
+                            console.log('Payment modal closed');
+                        }
+                    }
+                });
+
+                rzp.open();
+            } else if (result.status === "form_invalid") {
+                // Handle form validation errors
+                console.error("Form validation failed:", result.errors);
+                let errorMessages = "Please correct the following errors:\n";
+                for (const field in result.errors) {
+                    errorMessages += `\n- ${field}: ${result.errors[field].join(', ')}`;
+                }
+                alert(errorMessages);
+            } else {
+                alert("Something went wrong. Please try again or contact support.");
+                console.error("Error during payment setup:", result);
+            }
+        } catch (error) {
+            console.error("Error:", error);
+            alert("An error occurred. Please try again.");
+            
+            // Reset button state
+            const submitBtn = document.getElementById('complete_order');
+            submitBtn.textContent = 'Complete Order';
+            submitBtn.disabled = false;
+        }
+    });
+});
+</script>

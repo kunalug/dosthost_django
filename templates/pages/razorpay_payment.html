@@ -1,0 +1,57 @@
+<!-- This file is intentionally left blank. -->
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const options = {
+            key: "{{ rzp_key_id|default:'' }}",
+            amount: "{{ amount|default:'0' }}",
+            currency: "{{ currency|default:'INR' }}",
+            name: "DostHost",
+            description: "Complete Your Purchase",
+            order_id: "{{ rzp_order_id|default:'' }}",
+            handler: async function (response) {
+                const data = {
+                    razorpay_payment_id: response.razorpay_payment_id,
+                    razorpay_order_id: response.razorpay_order_id,
+                    razorpay_signature: response.razorpay_signature,
+                order_id: "{{ order_id|default:'' }}",
+                };
+
+                try {
+                    const result = await fetch("{{ callback_url|default:'/' }}", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "X-CSRFToken": "{{ csrf_token }}",
+                        },
+                        body: JSON.stringify(data),
+                    });
+
+                    const responseData = await result.json();
+
+                    if (responseData.status === "success") {
+                        window.location.href = `/thank-you/${responseData.order_id}/`;
+                    } else {
+                        window.location.href = "/checkout/";
+                    }
+                } catch (error) {
+                    window.location.href = "/checkout/";
+                }
+            },
+            prefill: {
+                name: "{{ prefill_name|default:'' }}",
+                email: "{{ prefill_email|default:'' }}",
+                contact: "{{ prefill_contact|default:'' }}",
+            },
+            notes: {
+                address: "{{ notes_address|default:'' }}",
+            },
+            theme: {
+                color: "#0F172A",
+            },
+        };
+
+        const rzp = new Razorpay(options);
+        rzp.open();
+    });
+</script>

@@ -1,0 +1,239 @@
+<section class="section banner-section bg-pattern-1">
+    <div class="container">
+             <div class="heading-section">
+                 <div class="heading-subtitle"><span class="tx-primary tx-16 fw-semibold">Dashboard</span></div>
+                 <div class="heading-title">Welcome,  <span class="tx-primary">{{ user.get_full_name|default:user.username }}</span></div>
+             </div>
+         <!-- Display Messages -->
+          {% if messages %}
+             <div class="row mb-3">
+                 <div class="col-12">
+                     {% for message in messages %}
+                         <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                             <strong>
+                                 {% if message.tags == 'success' %}
+                                     <i class="fas fa-check-circle me-2"></i>Success!
+                                 {% elif message.tags == 'error' %}
+                                     <i class="fas fa-exclamation-circle me-2"></i>Error!
+                                 {% elif message.tags == 'info' %}
+                                     <i class="fas fa-info-circle me-2"></i>Info!
+                                 {% endif %}
+                             </strong>
+                             {{ message }}
+                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                         </div>
+                     {% endfor %}
+                 </div>
+             </div>
+         {% endif %}
+        <div class="row g-4 justify-content-center">
+            <!-- User Profile Card -->
+            <div class="col-lg-4">
+                <div class="user-grid-card rounded-3 overflow-hidden">
+                    <div class="card-bg"></div>
+                    <div class="profile-header">
+                        <div class="profile-img rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center"
+                            {% if user.profile.avatar %}style="background-image: url('{{ user.profile.avatar.url }}');"{% endif %}>
+                            {% if not user.profile.avatar %}
+                                <i class="fas fa-user fa-3x text-muted"></i>
+                            {% endif %}
+                        </div>
+                        <h5 class="profile-name">{{ user.get_full_name|default:user.username }}</h5>
+                        <p class="profile-email">{{ user.email }}</p>
+                    </div>
+                    
+                    <div class="info-section">
+                        <h6>Personal Info</h6>
+                        <div class="user-info-item">
+                            <span class="user-info-label">Full Name</span>
+                            <span class="user-info-value">: {{ user.get_full_name|default:"Not provided" }}</span>
+                        </div>
+                        <div class="user-info-item">
+                            <span class="user-info-label">Email</span>
+                            <span class="user-info-value">: {{ user.email }}</span>
+                        </div>
+                        <div class="user-info-item">
+                            <span class="user-info-label">Phone</span>
+                            <span class="user-info-value">: {{ user.profile.phone|default:"Not provided" }}</span>
+                        </div>
+                        <div class="user-info-item">
+                            <span class="user-info-label">Bio</span>
+                            <span class="user-info-value">: {{ user.profile.bio|default:"No bio provided" }}</span>
+                        </div>
+                        <div class="user-info-item">
+                            <span class="user-info-label">Joined</span>
+                            <span class="user-info-value">: {{ user.date_joined|date:"M d, Y" }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Main Content -->
+            <div class="col-lg-8">
+                <div class="card main-card h-100">
+                    <div class="card-body p-4">
+                        <!-- Tab Navigation -->
+                        <ul class="nav nav-pills mb-4" id="profileTabs" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="edit-profile-tab" data-bs-toggle="pill" data-bs-target="#edit-profile" type="button" role="tab">
+                                    <i class="fas fa-edit me-2"></i>Edit Profile
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="change-password-tab" data-bs-toggle="pill" data-bs-target="#change-password" type="button" role="tab">
+                                    <i class="fas fa-lock me-2"></i>Change Password
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="orders-tab" data-bs-toggle="pill" data-bs-target="#orders" type="button" role="tab">
+                                    <i class="fas fa-shopping-cart me-2"></i>My Orders
+                                </button>
+                            </li>
+                        </ul>
+                        
+                        <!-- Tab Content -->
+                        <div class="tab-content" id="profileTabsContent">
+                            <!-- Edit Profile Tab -->
+                            <div class="tab-pane fade show active" id="edit-profile" role="tabpanel">
+                                <form method="POST" action="{% url 'update_profile' %}" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="form_type" value="profile">
+
+                                    <h6 class="mb-3">Profile Image</h6>
+                                    <div class="avatar-upload mb-4">
+                                        <div class="avatar-preview">
+                                            <div id="imagePreview" {% if user.profile.avatar %}style="background-image: url('{{ user.profile.avatar.url }}');"{% endif %}>
+                                                {% if not user.profile.avatar %}
+                                                    <i class="fas fa-user"></i>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        <div class="avatar-edit">
+                                            <input type='file' id="imageUpload" name="avatar" accept=".png, .jpg, .jpeg">
+                                            <label for="imageUpload" title="Change Profile Picture">
+                                                <i class="fas fa-camera"></i>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="first_name" class="form-label fw-semibold">First Name <span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" id="first_name" name="first_name" placeholder="Enter First Name" value="{{ user.first_name }}" required>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="last_name" class="form-label fw-semibold">Last Name</label>
+                                            <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Enter Last Name" value="{{ user.last_name }}">
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="email" class="form-label fw-semibold">Email <span class="text-danger">*</span></label>
+                                            <input type="email" class="form-control" id="email" name="email" placeholder="Enter email address" value="{{ user.email }}" required>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="phone" class="form-label fw-semibold">Phone</label>
+                                            <input type="tel" class="form-control" id="phone" name="phone" placeholder="Enter phone number" value="{{ user.profile.phone|default:'' }}">
+                                        </div>
+                                        <div class="col-12 mb-3">
+                                            <label for="address" class="form-label fw-semibold">Address</label>
+                                            <input type="text" class="form-control" id="address" name="address" placeholder="Enter address" value="{{ user.profile.address|default:'' }}">
+                                        </div>
+                                        <div class="col-12 mb-3">
+                                            <label for="bio" class="form-label fw-semibold">Bio</label>
+                                            <textarea class="form-control" id="bio" name="bio" rows="4" placeholder="Write your bio...">{{ user.profile.bio|default:'' }}</textarea>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="d-flex gap-3 justify-content-center">
+                                        <button type="button" class="btn btn-outline-danger" id="cancelBtn">Cancel</button>
+                                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                                    </div>
+                                </form>
+                            </div>
+                            
+                            <!-- Change Password Tab -->
+                            <div class="tab-pane fade" id="change-password" role="tabpanel">
+                                <form id="passwordForm" method="post" action="{% url 'change_password' %}">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="form_type" value="password">
+                                    <div class="mb-3">
+                                        <label for="currentPassword" class="form-label fw-semibold">Current Password <span class="text-danger">*</span></label>
+                                        <div class="position-relative">
+                                            <input type="password" class="form-control" id="currentPassword" name="old_password" placeholder="Enter current password" required>
+                                            <i class="fas fa-eye password-toggle" data-target="currentPassword"></i>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="newPassword" class="form-label fw-semibold">New Password <span class="text-danger">*</span></label>
+                                        <div class="position-relative">
+                                            <input type="password" class="form-control" id="newPassword" name="new_password1" placeholder="Enter new password" required>
+                                            <i class="fas fa-eye password-toggle" data-target="newPassword"></i>
+                                        </div>
+                                        <small class="form-text text-muted">Password must be at least 8 characters long</small>
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="confirmPassword" class="form-label fw-semibold">Confirm Password <span class="text-danger">*</span></label>
+                                        <div class="position-relative">
+                                            <input type="password" class="form-control" id="confirmPassword" name="new_password2" placeholder="Confirm new password" required>
+                                            <i class="fas fa-eye password-toggle" data-target="confirmPassword"></i>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="d-flex gap-3 justify-content-center">
+                                        <button type="button" class="btn btn-outline-danger" id="cancelPasswordBtn">Cancel</button>
+                                        <button type="submit" class="btn btn-primary">Update Password</button>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <!-- Orders Tab -->
+                            <div class="tab-pane fade" id="orders" role="tabpanel">
+                                <h6 class="mb-3">My Orders</h6>
+                                {% if user_orders %}
+                                    <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <thead class="table-light">
+                                                <tr>
+                                                    <th>Order #</th>
+                                                    <th>Plan</th>
+                                                    <th>Amount</th>
+                                                    <th>Status</th>
+                                                    <th>Date</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for order in user_orders %}
+                                                <tr>
+                                                    <td>#{{ order.id }}</td>
+                                                    <td>{{ order.hosting_plan.title|default:"N/A" }}</td>
+                                                    <td>₹{{ order.total_amount }}</td>
+                                                    <td>
+                                                        <span class="badge {% if order.status == 'completed' %}bg-success{% elif order.status == 'pending' %}bg-warning{% elif order.status == 'processing' %}bg-info{% else %}bg-danger{% endif %}">
+                                                            {{ order.get_status_display|title }}
+                                                        </span>
+                                                    </td>
+                                                    <td>{{ order.created_at|date:"M d, Y" }}</td>
+                                                    <td>
+                                                        <a href="{% url 'order_detail' order.id %}" class="btn btn-sm btn-outline-primary">View</a>
+                                                    </td>
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                {% else %}
+                                    <div class="text-center py-5">
+                                        <i class="fas fa-shopping-cart fa-3x text-muted mb-3"></i>
+                                        <h5 class="text-muted">No Orders Yet</h5>
+                                        <p class="text-muted">You haven't placed any orders yet.</p>
+                                        <a href="{% url 'home' %}" class="btn btn-primary">Browse Plans</a>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</section>
+<br>

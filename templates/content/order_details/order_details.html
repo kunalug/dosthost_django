@@ -1,0 +1,58 @@
+{% load static hosting_extras %}
+
+<div class="container my-5">
+    <div class="order-details-container">
+        <div class="heading-section text-center mb-4">
+            <div class="heading-subtitle"><span class="tx-primary tx-16 fw-semibold">Hosting Order</span></div>
+            <div class="heading-title"># <span class="tx-primary">Order {{ order.id }}</span></div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4 class="column-title">Plan Features</h4>
+                        {% for key, value in order.hosting_plan.features.items %}
+                        <div class="detail-item">
+                            <span class="detail-label">{{ key }}</span>
+                            <span class="detail-value">{{ value }}</span>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <div class="col-md-6">
+                        <h4 class="column-title">Order Details</h4>
+                        <p class="column-subtitle">Review your order information below.</p>
+                        <div class="detail-item">
+                            <span class="detail-label">Status</span>
+                            <span class="badge {% if order.status == 'completed' %}bg-success{% elif order.status == 'pending' %}bg-warning{% elif order.status == 'processing' %}bg-info{% else %}bg-danger{% endif %}">
+                                    {{ order.get_status_display|title }}
+                            </span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Plan</span>
+                            <span class="detail-value">{{ order.hosting_plan.title|default:"-" }}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Amount</span>
+                            <span class="detail-value">₹{{ order.total_amount|floatformat:2|default:"-" }}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Date</span>
+                            <span class="detail-value">{{ order.created_at|date:"M d, Y"|default:"-" }}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Duration</span>
+                            <span class="detail-value">{{ order.get_billing_cycle_display|default:"-" }}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Invoice</span>
+                            <span class="detail-value">
+                                <a href="{% url 'download_invoice' order.id %}" class="btn btn-sm btn-primary" target="_blank">Download Invoice</a>
+                            </span>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

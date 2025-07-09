@@ -1,0 +1,137 @@
+{% load static %}
+
+<div class="main-content app-content">
+<section class="section banner-section bg-pattern-1">
+    <img src="{% static 'assets/images/patterns/2.png' %}" alt="img" class="patterns-6 op-1 z-index-0 top-14p">
+    <img src="{% static 'assets/images/patterns/2.png' %}" alt="img" class="patterns-1 op-1">
+    <div class="container">
+        <div class="heading-section">
+            <div class="heading-subtitle"><span class="tx-primary tx-16 fw-semibold">Login</span></div>
+            <div class="heading-title">Login to your <span class="tx-primary">Account</span></div>
+        </div>
+        <div class="row justify-content-center align-items-center">
+            <div class="col-xl-4 col-lg-6">
+                <a href="{% url 'home' %}">
+                    {% if logo.auth_logo %}
+                        <img src="{{ logo.auth_logo.url }}" alt="img" class="auth-logo logo-color mb-4 mx-auto">
+                        <img src="{{ logo.auth_logo.url }}" alt="img" class="auth-logo logo-dark mb-4 mx-auto">
+                    {% else %}
+                        <img src="{% static 'assets/images/brand/dosthost-logo.png' %}" alt="img" class="auth-logo logo-color mb-4 mx-auto">
+                        <img src="{% static 'assets/images/brand/dosthost-logo.png' %}" alt="img" class="auth-logo logo-dark mb-4 mx-auto">
+                    {% endif %}
+                </a>
+                <div class="card border">
+                    <div class="card-body p-sm-6">
+                        <h3 class="mb-1">Login</h3>
+                        <p class="mb-4 tx-muted">Sign in to your account to continue.</p>
+                        
+                        <!-- Display non-field errors (like authentication errors) -->
+                                    {% if form.non_field_errors %}
+                                        <div class="alert alert-danger mb-3">
+                                            {% for error in form.non_field_errors %}
+                                                {{ error }}
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                    
+                            <form class="form-horizontal" method="post" autocomplete="off" data-lpignore="true" data-form-type="other">
+                            {% csrf_token %}
+                            <!-- Add a hidden username field to trick browsers -->
+                            <input type="text" style="display:none" name="fakeusernameremembered"/>
+                            <input type="password" style="display:none" name="fakepasswordremembered"/>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="mb-3">
+                                        <label class="mb-2 fw-500">Email<span class="tx-danger ms-1">*</span></label>
+                                        {{ form.email }}
+                                        {% if form.email.errors %}
+                                            <div class="invalid-feedback d-block">
+                                                {{ form.email.errors.0 }}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="mb-3">
+                                        <label class="mb-2 fw-500">Password<span class="tx-danger ms-1">*</span></label>
+                                        <div class="input-group">
+                                        {{ form.password }}
+                                            <a href="javascript:void(0)" class="input-group-text bg-transparent tx-muted" onclick="togglePassword('id_password', 'showPassword')">
+                                                <i class="fe fe-eye tx-muted op-7" id="showPassword"></i>
+                                            </a>
+                                        </div>
+                                        {% if form.password.errors %}
+                                            <div class="invalid-feedback d-block">
+                                                {{ form.password.errors.0 }}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-xl-12">
+                                    <div class="d-flex mb-3">
+                                        <div class="form-check">
+                                            {{ form.remember_me }}
+                                            <label class="form-check-label tx-15" for="{{ form.remember_me.id_for_label }}">
+                                                Remember me
+                                            </label>
+                                        </div>
+                                        {% comment %} <div class="ms-auto">
+                                            <a href="#" class="tx-primary ms-1 tx-13">Forgot Password?</a>
+                                        </div> {% endcomment %}
+                                    </div>
+                                    
+                                    
+                                    <div class="d-grid mb-3">
+                                        <button type="submit" class="btn btn-primary">Login</button>
+                                    </div>
+                                    
+                                    {% comment %}
+                                    <div class="d-grid mb-3">
+                                        <button type="button" class="btn btn-white border">
+                                            <img src="{% static 'assets/images/png/45.png' %}" class="me-2" alt="img" width="20">
+                                            Continue with Google
+                                        </button>
+                                    </div>
+                                    {% endcomment %}
+                                    
+                                    <div class="text-center">
+                                        <p class="mb-0 tx-14">Don't have an account yet?
+                                            <a href="{% url 'register_view' %}" class="tx-primary ms-1">Sign Up</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+// More robust password toggle: works regardless of input id
+function togglePasswordFromIcon(e) {
+    e.preventDefault();
+    // Find the closest input-group
+    var group = e.target.closest('.input-group');
+    if (!group) return;
+    var input = group.querySelector('input[type="password"], input[type="text"]');
+    var icon = group.querySelector('i');
+    if (!input || !icon) return;
+    if (input.type === "password") {
+        input.type = "text";
+        icon.classList.remove("fe-eye");
+        icon.classList.add("fe-eye-off");
+    } else {
+        input.type = "password";
+        icon.classList.remove("fe-eye-off");
+        icon.classList.add("fe-eye");
+    }
+}
+document.addEventListener('DOMContentLoaded', function() {
+    var toggleLinks = document.querySelectorAll('.input-group-text[onclick*="togglePassword"]');
+    toggleLinks.forEach(function(link) {
+        link.onclick = togglePasswordFromIcon;
+    });
+});
+</script>

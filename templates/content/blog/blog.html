@@ -1,0 +1,201 @@
+{% load static %}
+<!-- Start Blog Section -->
+<section class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-8">
+                <div class="row">
+                    {% for blog_item in blogs %}
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="position-relative">
+                                <a href="{% url 'blogs:blog_detail' blog_item.slug %}">
+                                    {% if blog_item.image %}
+                                        <img class="card-img-top" src="{{ blog_item.image.url }}" alt="{{ blog_item.title }}">
+                                    {% else %}
+                                        <img class="card-img-top" src="{% static 'assets/images/blog/1.jpg' %}" alt="Default blog image">
+                                    {% endif %}
+                                </a>
+                                {% if blog_item.categories.all %}
+                                    {% for cat in blog_item.categories.all %}
+                                        <span class="badge bg-secondary blog-badge">{{ cat.name }}</span>
+                                    {% empty %}
+                                        <span class="badge bg-secondary blog-badge">No Category</span>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                            <div class="card-body d-flex flex-column">
+                                <h5><a href="{% url 'blogs:blog_detail' blog_item.slug %}">{{ blog_item.title }}</a></h5>
+                                <div class="tx-muted">
+                                    {{ blog_item.content|truncatewords:20|safe }}
+                                </div>
+                                <div class="d-flex align-items-center pt-4 mt-auto">
+                                    <div class="avatar me-3 cover-image rounded-circle">
+                                        <img src="{% static 'assets/images/profile/1.jpg' %}" class="rounded-circle" alt="img" width="40">
+                                    </div>
+                                    <div>
+                                        <a href="javascript:void(0);" class="h6">
+                                                {% if blog_item.author.get_full_name %}
+                                                    {{ blog_item.author.get_full_name }}
+                                                {% else %}
+                                                    {{ blog_item.author.username }}
+                                                {% endif %}
+                                            
+                                        </a>
+                                        <small class="d-block tx-muted">{{ blog_item.created_at|timesince }} ago</small>
+                                    </div>
+                                    {% comment %} <div class="ms-auto">
+                                        <form action="{% url 'blogs:blog_like' blog_item.id %}" method="POST" style="display:inline;">
+                                            {% csrf_token %}
+                                            <button type="submit" class="icon d-inline-block tx-muted btn btn-link p-0" style="box-shadow:none;">
+                                                <i class="fe fe-heart me-1 rounded-circle p-2 bg-gray-200 tx-muted"></i>
+                                            </button>
+                                        </form>
+                                    </div> {% endcomment %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                        <div class="col-12">
+                            <p>No blog posts found.</p>
+                        </div>
+                    {% endfor %}
+                </div>
+                <!-- COL-END -->
+                <div class="mb-9">
+                    <div class="float-end">
+                        <ul class="pagination">
+                            {% if blogs.has_previous %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ blogs.previous_page_number }}{% if query %}&q={{ query }}{% endif %}">Prev</a>
+                                </li>
+                            {% else %}
+                                <li class="page-item disabled">
+                                    <a class="page-link" href="#" tabindex="-1">Prev</a>
+                                </li>
+                            {% endif %}
+
+                            {% for i in blogs.paginator.page_range %}
+                                {% if blogs.number == i %}
+                                    <li class="page-item active"><a class="page-link" href="#">{{ i }}</a></li>
+                                {% else %}
+                                    <li class="page-item"><a class="page-link" href="?page={{ i }}{% if query %}&q={{ query }}{% endif %}">{{ i }}</a></li>
+                                {% endif %}
+                            {% endfor %}
+
+                            {% if blogs.has_next %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ blogs.next_page_number }}{% if query %}&q={{ query }}{% endif %}">Next</a>
+                                </li>
+                            {% else %}
+                                <li class="page-item disabled">
+                                    <a class="page-link" href="#">Next</a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- COL-END -->
+            <div class="col-xl-4">
+                <div class="card">
+                    <div class="card-body">
+                         <form action="{% url 'blogs:blog_search' %}" method="GET" class="form mb-0">
+                            <div class="form-group custom-form-group">
+                                <input type="text" name="q" class="form-control form-control-lg rounded-pill" placeholder="Find your Blog here..." value="{{ request.GET.q }}">
+                                <button class="custom-form-btn btn btn-lg btn-primary bg-primary-gradient rounded-pill border-0" type="submit" id="btn-addon">Search</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="card">
+                        <div class="card-body">
+                            <div class="">
+                                <p class="h5 mb-4">Recent Posts</p>
+                                {% if recent_posts %}
+                                    {% for post in recent_posts %}
+                                    <div class="row mb-3 mb-xl-0">
+                                        <div class="col-xl-4 col-lg-2 col-md-3 col-sm-4 text-center">
+                                            <a href="{% url 'blogs:blog_detail' post.slug %}">
+                                            {% if post.image %}
+                                                <img src="{{ post.image.url }}" class="img-fluid br-5 w-100" width="120" alt="{{ post.title }}">
+                                            {% else %}
+                                                <img src="{% static 'assets/images/blog/1.jpg' %}" class="img-fluid br-5 w-100" width="120" alt="Default blog image">
+                                            {% endif %}
+                                            </a>
+                                        </div>
+                                        <div class="col-xl-8 col-lg-9 col-md-8 col-sm-8">
+                                            {% if post.categories.all %}
+                                                {% for cat in post.categories.all %}
+                                                    <span class="badge bg-secondary-transparent tx-secondary me-1 mb-1 mt-3 mt-sm-0">{{ cat.name }}</span>
+                                                {% empty %}
+                                                    <span class="badge bg-secondary-transparent tx-secondary me-1 mb-1 mt-3 mt-sm-0">No Category</span>
+                                                {% endfor %}
+                                            {% endif %}
+                                            <h6 class="mb-0"><a href="{% url 'blogs:blog_detail' post.slug %}">{{ post.title|truncatechars:30 }}</a></h6>
+                                            <p class="tx-muted mb-0">{{ post.created_at|date:"M d, Y" }}</p>
+                                        </div>
+                                    </div>
+                                    {% if not forloop.last %}<hr class="my-3">{% endif %}
+                                    {% endfor %}
+                                {% else %}
+                                    <p>No recent posts found.</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <p class="h5 mb-4">Tags</p>
+                        <div class="tags">
+                            {% if tags %}
+                                {% for tag in tags %}
+                                    <a href="{% url 'blogs:blog_tag' tag.slug %}" class="tag">{{ tag.name }}</a>
+                                {% endfor %}
+                            {% else %}
+                                <span class="tx-muted">No tags found.</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card bg-primary-transparent feature-card-14 overflow-hidden">
+                    <div class="card-body">
+                        <!-- Messages Display for Footer Form -->
+                            {% if messages %}
+                                <div class="mb-3">
+                                    {% for message in messages %}
+                                        <div class="alert alert-{{ message.tags }} alert-dismissible fade show py-2 px-3" role="alert" style="font-size: 0.85rem;">
+                                            {% if message.tags == 'success' %}
+                                                <i class="bi bi-check-circle me-1"></i>
+                                            {% elif message.tags == 'error' %}
+                                                <i class="bi bi-exclamation-circle me-1"></i>
+                                            {% elif message.tags == 'info' %}
+                                                <i class="bi bi-info-circle me-1"></i>
+                                            {% endif %}
+                                            {{ message }}
+                                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close" style="font-size: 0.7rem;"></button>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            <form action="{% url 'subscribe' %}" method="POST" class="form mb-4">
+                            {% csrf_token %} 
+                        <h5 class="fw-semibold text-white">NEVER MISS A POST !</h5>
+                        <P class="text-white">Signup for free to get the latest posts.</P>
+                        <div class="input-group">
+                            <input type="email" class="form-control border-0" id="email" name="email"placeholder="Enter your email id">
+                            <button type="submit" class="btn btn-info-dark">Subscribe<i class="fa fa-paper-plane ms-2 tx-11"></i></button>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--End Blog-->
+</div>

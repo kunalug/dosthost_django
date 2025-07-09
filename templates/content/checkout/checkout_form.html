@@ -1,0 +1,347 @@
+{% load static %}
+<section class="section banner-section bg-pattern-1">
+    <div class="container">
+        <div class="heading-section">
+            <div class="heading-subtitle"><span class="tx-primary tx-16 fw-semibold">Checkout</span></div>
+            <div class="heading-title">Complete Your <span class="tx-primary">Order</span></div>
+        </div>
+        <div class="checkout-wrapper">
+            <div class="checkout-form">
+                <form action="{% url 'checkout' %}" id="checkoutForm" method="POST">
+                    {% csrf_token %}
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-danger">
+                            {% for error in form.non_field_errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    <!-- Billing Information -->
+                    <div class="form-section">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="{{ form.first_name.id_for_label }}">First Name <span class="required">*</span></label>
+                                {{ form.first_name }}
+                                {% if form.first_name.errors %}
+                                    <div class="errorlist">{{ form.first_name.errors }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="form-group">
+                                <label for="{{ form.last_name.id_for_label }}">Last Name <span class="required">*</span></label>
+                                {{ form.last_name }}
+                                {% if form.last_name.errors %}
+                                    <div class="errorlist">{{ form.last_name.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="{{ form.email.id_for_label }}">Email Address <span class="required">*</span></label>
+                            {{ form.email }}
+                            {% if form.email.errors %}
+                                <div class="errorlist">{{ form.email.errors }}</div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="{{ form.phone.id_for_label }}">Phone Number <span class="required">*</span></label>
+                            {{ form.phone }}
+                            {% if form.phone.errors %}
+                                <div class="errorlist">{{ form.phone.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        
+                        <div class="form-group">
+                            <label for="{{ form.address.id_for_label }}">Street Address <span class="required">*</span></label>
+                            {{ form.address }}
+                            {% if form.address.errors %}
+                                <div class="errorlist">{{ form.address.errors }}</div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="{{ form.city.id_for_label }}">City <span class="required">*</span></label>
+                                {{ form.city }}
+                                {% if form.city.errors %}
+                                    <div class="errorlist">{{ form.city.errors }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="form-group">
+                                <label for="{{ form.state.id_for_label }}">State/Province <span class="required">*</span></label>
+                                {{ form.state }}
+                                {% if form.state.errors %}
+                                    <div class="errorlist">{{ form.state.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="{{ form.zip_code.id_for_label }}">ZIP Code <span class="required">*</span></label>
+                                {{ form.zip_code }}
+                                {% if form.zip_code.errors %}
+                                    <div class="errorlist">{{ form.zip_code.errors }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="form-group">
+                                <label for="{{ form.country.id_for_label }}">Country <span class="required">*</span></label>
+                                {{ form.country }}
+                                {% if form.country.errors %}
+                                    <div class="errorlist">{{ form.country.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                         <div class="form-group">
+                            <label for="{{ form.gst_number.id_for_label }}">GST Number</label>
+                            {{ form.gst_number }}
+                            {% if form.gst_number.errors %}
+                                <div class="errorlist">{{ form.gst_number.errors }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ form.domain_name.id_for_label }}">Domain Name</label>
+                            {{ form.domain_name }}
+                            {% if form.domain_name.errors %}
+                                <div class="errorlist">{{ form.domain_name.errors }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <!-- Payment Method -->
+                    <div class="form-section">
+                        <h3 class="section-title">Payment Method</h3>
+                        <div class="payment-methods">
+                            {% for radio in form.payment_method %}
+                            <div class="payment-method {% if radio.data.value == form.payment_method.initial %}selected{% endif %}" data-method="{{ radio.data.value }}">
+                                {{ radio.tag }}
+                                <label for="{{ radio.id_for_label }}">{{ radio.choice_label }}</label>
+                            </div>
+                            {% endfor %}
+                             {% if form.payment_method.errors %}
+                                <div class="errorlist">{{ form.payment_method.errors }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                     <!-- Promo Code -->
+                    <div class="form-section">
+                        <h3 class="section-title">Promo Code</h3>
+                        <div class="form-group">
+                             <label for="{{ form.promo_code.id_for_label }}">Enter Promo Code</label>
+                            <div class="input-group">
+                                {{ form.promo_code }}
+                                <button class="btn btn-primary" type="button" id="applyPromoCodeBtn">Apply</button>
+                            </div>
+                            {% if form.promo_code.errors %}
+                                <div class="errorlist">{{ form.promo_code.errors }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+               
+            </div>
+
+            <!-- Order Summary -->
+            <div class="order-summary">
+                <h3 class="section-title">Order Summary</h3>
+                
+                {% if plan %}
+                <div class="order-item">
+                    <div class="item-details">
+                        <h4>{{ plan.title }}</h4>
+                        <p>{{ plan.category.name }} - {{ plan.get_plan_type_display }}</p>
+                        <h5>Plan Details</h5>
+                        <ul class="list-unstyled">
+                            {% for feature, value in plan.features.items %}
+                                <li><strong>{{ feature }}:</strong> {{ value }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="item-price">₹{{ subtotal|floatformat:2 }}</div>
+                </div>
+                {% else %}
+                <div class="alert alert-warning">
+                    <p>No plan selected. Please <a href="{% url 'plans' %}">choose a plan</a> to proceed.</p>
+                </div>
+                {% endif %}
+
+                <!-- Add other items if applicable, e.g., domain, SSL -->
+                
+                <div>
+                    <div class="total-row">
+                        <span>{{ plan.title }}:</span>
+                        <span>₹{{ subtotal|floatformat:2 }}</span>
+                    </div>
+                    <div class="total-row">
+                        <span>Discount:</span>
+                        <span id="discount">-₹0.00</span>
+                    </div>
+                    <div class="total-row">
+                        <span>Tax ({{ tax_rate }}%):</span>
+                        <span id="taxAmount">₹{{ tax|floatformat:2 }}</span>
+                    </div>
+                    <div class="total-row final">
+                        <span>Total:</span>
+                        <span id="finalTotal">₹{{ total|floatformat:2 }}</span>
+                    </div>
+                </div>
+
+                <button type="submit" id="complete_order" class="checkout-btn">
+                    Complete Order
+                </button>
+
+                <div class="security-note">
+                    🔒 Your payment information is encrypted and secure
+                </div>
+            </div>
+                </form>
+        </div>
+    </div>
+</section>
+
+<!-- Load Razorpay script -->
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const paymentMethods = document.querySelectorAll('.payment-method input[name="payment_method"]');
+    const cardInfoDiv = document.getElementById('cardInfo');
+
+    paymentMethods.forEach(radio => {
+        radio.addEventListener('change', function () {
+            // Remove 'selected' class from all parent divs
+            document.querySelectorAll('.payment-method').forEach(pm => pm.classList.remove('selected'));
+            // Add 'selected' class to the parent of the checked radio
+            this.closest('.payment-method').classList.add('selected');
+
+            if (this.value === 'card') {
+                if (cardInfoDiv) {
+                    cardInfoDiv.classList.add('active');
+                    cardInfoDiv.classList.remove('d-none');
+                }
+            } else {
+                if (cardInfoDiv) {
+                    cardInfoDiv.classList.remove('active');
+                    cardInfoDiv.classList.add('d-none');
+                }
+            }
+        });
+    });
+
+    // Initial check in case 'card' is pre-selected
+    const initialPaymentMethod = document.querySelector('input[name="payment_method"]:checked');
+    if (initialPaymentMethod && initialPaymentMethod.value === 'card') {
+        if (cardInfoDiv) {
+            cardInfoDiv.classList.add('active');
+            cardInfoDiv.classList.remove('d-none');
+        }
+        initialPaymentMethod.closest('.payment-method').classList.add('selected');
+    } else if (initialPaymentMethod) {
+        if (cardInfoDiv) {
+            cardInfoDiv.classList.remove('active');
+            cardInfoDiv.classList.add('d-none');
+        }
+        initialPaymentMethod.closest('.payment-method').classList.add('selected');
+    }
+
+    // Payment form submission handler
+    const form = document.getElementById("checkoutForm");
+    
+    form.addEventListener("submit", function (e) {
+        const paymentMethod = document.querySelector("input[name='payment_method']:checked").value;
+        if (paymentMethod === "razorpay") {
+            // For Razorpay, we let the backend handle it.
+            // The form will be submitted, and the backend will return a JSON response.
+            return;
+        }
+        // For other payment methods, submit the form normally.
+    });
+});
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const applyPromoCodeBtn = document.getElementById('applyPromoCodeBtn');
+    if (applyPromoCodeBtn) {
+        applyPromoCodeBtn.addEventListener('click', async function () {
+            const promoCodeInput = document.querySelector('input[name="promo_code"]');
+            const promoCode = promoCodeInput.value.trim();
+            const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+            if (!promoCode) {
+                alert('Please enter a promo code.');
+                return;
+            }
+
+            try {
+                const response = await fetch('/apply-promo-code/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'X-CSRFToken': csrfToken,
+                    },
+                    body: `promo_code=${promoCode}`,
+                });
+
+                const result = await response.json();
+
+                if (response.ok && result.status === 'success') {
+                    const subtotal = parseFloat('{{ subtotal|default:0 }}');
+                    const taxRate = parseFloat('{{ tax_rate|default:0 }}');
+                    let discountAmount = 0;
+
+                    if (result.discount_type === 'percentage') {
+                        const discountPercentage = parseFloat(result.discount_value);
+                        discountAmount = (subtotal * discountPercentage) / 100;
+                    } else {
+                        discountAmount = parseFloat(result.discount_value);
+                    }
+
+                    const discountedSubtotal = subtotal - discountAmount;
+                    const tax = (discountedSubtotal * taxRate) / 100;
+                    const finalTotal = discountedSubtotal + tax;
+
+                    document.getElementById('discount').textContent = `-₹${discountAmount.toFixed(2)}`;
+                    document.getElementById('taxAmount').textContent = `₹${tax.toFixed(2)}`;
+                    document.getElementById('finalTotal').textContent = `₹${finalTotal.toFixed(2)}`;
+
+                    alert('Promo code applied successfully!');
+                } else {
+                    alert(result.message || 'Invalid or expired promo code.');
+                }
+            } catch (error) {
+                console.error('Error applying promo code:', error);
+                alert('An error occurred while applying the promo code.');
+            }
+        });
+    }
+});
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    {% if user.is_authenticated %}
+    const userData = {
+        firstName: "{{ user.first_name|default:'' }}",
+        lastName: "{{ user.last_name|default:'' }}",
+        email: "{{ user.email|default:'' }}",
+        phone: "{{ user.profile.phone|default:'' }}",
+        address: "{{ user.profile.address|default:'' }}",
+        city: "{{ user.profile.city|default:'' }}",
+        state: "{{ user.profile.state|default:'' }}",
+        zip_code: "{{ user.profile.zip_code|default:'' }}",
+        country: "{{ user.profile.country|default:'' }}",
+        gst_number: "{{ user.profile.gst_number|default:'' }}"
+    };
+
+    if (userData.firstName) document.getElementById('{{ form.first_name.id_for_label }}').value = userData.firstName;
+    if (userData.lastName) document.getElementById('{{ form.last_name.id_for_label }}').value = userData.lastName;
+    if (userData.email) document.getElementById('{{ form.email.id_for_label }}').value = userData.email;
+    if (userData.phone) document.getElementById('{{ form.phone.id_for_label }}').value = userData.phone;
+    if (userData.address) document.getElementById('{{ form.address.id_for_label }}').value = userData.address;
+    if (userData.city) document.getElementById('{{ form.city.id_for_label }}').value = userData.city;
+    if (userData.state) document.getElementById('{{ form.state.id_for_label }}').value = userData.state;
+    if (userData.zip_code) document.getElementById('{{ form.zip_code.id_for_label }}').value = userData.zip_code;
+    if (userData.country) document.getElementById('{{ form.country.id_for_label }}').value = userData.country;
+    if (userData.gst_number) document.getElementById('{{ form.gst_number.id_for_label }}').value = userData.gst_number;
+    {% endif %}
+});
+</script>

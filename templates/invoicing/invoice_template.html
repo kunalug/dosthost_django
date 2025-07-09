@@ -1,0 +1,171 @@
+{% load static %}
+    <style>
+        @page {
+            size: a4;
+            margin: 1cm;
+        }
+        body {
+            font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+            color: #555;
+            font-size: 12px;
+            line-height: 1.4;
+        }
+        .invoice-box {
+            max-width: 100%;
+            margin: 0;
+            padding: 0;
+            border: 1px solid #eee;
+            box-shadow: 0 0 10px rgba(0, 0, 0, .15);
+        }
+        .invoice-box table {
+            width: 100%;
+            line-height: inherit;
+            text-align: left;
+            border-collapse: collapse;
+        }
+        .invoice-box table td {
+            padding: 5px;
+            vertical-align: top;
+        }
+        .header-table td {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            vertical-align: middle;
+        }
+        .title {
+            font-size: 28px;
+            line-height: 28px;
+            color: #333;
+            font-weight: bold;
+        }
+        .info-table td {
+            padding: 10px;
+        }
+        .heading td {
+            background: #f7f7f7;
+            border-bottom: 1px solid #ddd;
+            font-weight: bold;
+            padding: 8px 5px;
+        }
+        .item td {
+            border-bottom: 1px solid #eee;
+        }
+        .total td {
+            font-weight: bold;
+        }
+        .text-right {
+            text-align: right;
+        }
+        .features-table {
+            width: 100%;
+            margin-top: 5px;
+            font-size: 11px;
+            color: #666;
+        }
+        .features-table td {
+            padding: 1px 3px 1px 0;
+            border: none;
+        }
+        .payment-details {
+            margin-top: 20px;
+            padding: 10px;
+            border-top: 1px solid #eee;
+        }
+    </style>
+
+    <div class="invoice-box">
+        <!-- Header -->
+        <table class="header-table">
+            <tr>
+                <td>
+                    {% if logo.bill_logo %}
+                        <img src="{{ logo.bill_logo.path }}" alt="Logo" style="max-width: 150px; max-height: 50px;">
+                    {% else %}
+                        <h1 class="title">Dosthost</h1>
+                    {% endif %}
+                </td>
+                <td class="text-right">
+                    <strong>Invoice #: {{ invoice.pk }}</strong><br>
+                    Created: {{ invoice.created_at|date:"F d, Y" }}
+                </td>
+            </tr>
+        </table>
+
+        <!-- Billing Info -->
+        <table style="margin-top: 20px;">
+            <tr class="info-table"."heading">
+                <td>
+                    <strong>Billed To:</strong><br>
+                    {{ billing_address.name }}<br>
+                    {{ billing_address.address }}<br>
+                    {{ billing_address.city }}, {{ billing_address.state }} {{ billing_address.zip_code }}<br>
+                    {{ billing_address.country }}<br>
+                    {{ billing_address.email }}<br>
+                    {{ billing_address.phone }}<br>
+                    {% if order.gst_number %}
+                        GSTIN: {{ order.gst_number }}
+                    {% endif %}
+                </td>
+                <td class="text-right">
+                    <strong>From:</strong><br>
+                    {{ billing_config.from_name }}<br>
+                    {{ billing_config.from_address|linebreaksbr }}<br>
+                    {{ billing_config.from_email }}
+                </td>
+            </tr>
+        </table>
+
+        <!-- Order Details -->
+        <table>
+            <tr class="heading">
+                <td>Details</td>
+                <td class="text-right">Amount</td>
+            </tr>
+            <tr class="item">
+                <td>
+                    <strong>{{ plan.title }} ({{ order.billing_cycle|title }})</strong>
+                    <table class="features-table">
+                        {% for key, value in plan_details.items %}
+                        <tr>
+                            <td style="width: 120px;"><strong>{{ key }}:</strong></td>
+                            <td>{{ value }}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </td>
+                <td class="text-right" style="vertical-align: top;">
+                    <table style="width: 100%;">
+                        <tr>
+                            <td>{{ plan.title }} ({{ order.billing_cycle|title }}):</td>
+                            <td class="text-right"> {{ subtotal|floatformat:2 }}</td>
+                        </tr>
+                        <tr>
+                            <td>Discount:</td>
+                            <td class="text-right">- {{ order.discount_amount|floatformat:2 }}</td>
+                        </tr>
+                        <tr>
+                            <td>Tax (18%):</td>
+                            <td class="text-right"> {{ order.tax_amount|floatformat:2 }}</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr class="total">
+                <td class="text-right"><strong>Total:</strong></td>
+                <td class="text-right"><strong> {{ order.total_amount|floatformat:2 }}</strong></td>
+            </tr>
+        </table>
+
+        <!-- Payment Details -->
+        <table style="margin-top: 20px;">
+            <tr class="heading">
+                <td>Payment Details</td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>Payment Method:</strong> {{ payment_method }}<br>
+                    <strong>Transaction ID:</strong> {{ transaction_id }}
+                </td>
+            </tr>
+        </table>
+    </div>

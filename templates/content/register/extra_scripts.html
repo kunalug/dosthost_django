@@ -1,0 +1,16 @@
+<script>
+    function togglePassword(passwordInputId, toggleIconId) {
+        const passwordInput = document.getElementById(passwordInputId);
+        const toggleIcon = document.getElementById(toggleIconId);
+
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            toggleIcon.classList.remove('fe-eye');
+            toggleIcon.classList.add('fe-eye-off');
+        } else {
+            passwordInput.type = 'password';
+            toggleIcon.classList.remove('fe-eye-off');
+            toggleIcon.classList.add('fe-eye');
+        }
+    }
+</script>

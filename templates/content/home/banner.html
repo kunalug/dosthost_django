@@ -1,0 +1,26 @@
+{% load static %}
+<div class="main-content app-content">
+<section class="banner-section section banner-1">
+    <img src="{% static 'assets/images/patterns/1.png' %}" alt="img" class="patterns-2">
+    <img src="{% static 'assets/images/patterns/4.png' %}" alt="img" class="patterns-3">
+    <img src="{% static 'assets/images/patterns/6.png' %}" alt="img" class="patterns-4">
+    <img src="{% static 'assets/images/patterns/6.png' %}" alt="img" class="patterns-6">
+    <img src="{% static 'assets/images/patterns/10.png' %}" alt="img" class="patterns-8 op-2">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-7">
+                <div class="mb-5">
+                    <p class="mb-3 content-1 h5 text-white">Premium Web Hosting Solutions For Your <span class="tx-info-dark position-relative">Success<span class="br-bottom-before"></span></span></p>
+                    <p class="content-2">Lightning-fast performance & 24/7 expert support. Experience hosting that grows with your business</p>
+                </div>
+                <a href="#features" class="btn btn-lg  btn-secondary me-2 mb-2 mb-sm-0"><i class="bi bi-arrow-right me-2"></i>Get Started</a>
+                <a href="{% url 'contact'%}" class="btn btn-lg btn-white mb-2 mb-sm-0"><i class="bi bi-telephone me-2"></i>Contact Us</a>
+            </div>
+            <div class="col-lg-5">
+                <div class="text-lg-end text-center mt-4 mt-lg-0">
+                    <img src="{% static 'assets/images/png/1.png' %}" class="img-fluid" alt="img">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

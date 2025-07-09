@@ -1,0 +1,30 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+<!-- Start Extra Styles -->
+{% block extra_styles %} {% include 'content/about/extra_styles.html' %} {% endblock %}
+<!-- End Extra Styles -->
+
+<!--- Start Page Content -->
+{% block page_content %}
+<!-- Page Content -->
+
+<!--Banner Section-->
+{% include 'content/privacy_polices/banner.html' %}
+<!--End Section-->
+
+<!--Terms of Services Section-->
+{% include 'content/privacy_polices/policy.html' %}
+<!--End Section-->
+
+<!--Newsletter Section-->
+{% include 'components/subscribe.html' %}
+<!--End Section-->
+
+<!--- End Page Content -->
+{% endblock %}
+<!-- Extra Scripts Start -->
+{% block extra_scripts%} {% include 'content/home/extra_scripts.html' %} {% endblock %}
+<!-- Extra Scripts End -->
+
+{% block title %} | Privacy Policy{% endblock %}

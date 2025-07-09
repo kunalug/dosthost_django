@@ -1,0 +1,21 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+<!-- Start Extra Styles -->
+{% block extra_styles %} {% include 'content/order_details/extra_styles.html' %} {% endblock %}
+<!-- End Extra Styles -->
+
+<!--- Start Page Content -->
+{% block page_content %}
+<div class="main-content app-content">
+    <!-- Page Content -->
+
+    {% include 'content/order_details/order_details.html' %}
+
+    <!--- End Page Content -->
+</div>
+{% endblock %}
+<!-- Extra Scripts Start -->
+{% block extra_scripts%} {% include 'content/order_details/extra_scripts.html' %} {% endblock %}
+<!-- Extra Scripts End -->
+        

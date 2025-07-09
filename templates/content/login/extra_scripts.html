@@ -1,0 +1,20 @@
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const passwordInput = document.getElementById('id_password');
+        const toggleIcon = document.getElementById('showPassword');
+        if (passwordInput && toggleIcon) {
+            toggleIcon.parentElement.addEventListener('click', function(e) {
+                e.preventDefault();
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    toggleIcon.classList.remove('fe-eye');
+                    toggleIcon.classList.add('fe-eye-off');
+                } else {
+                    passwordInput.type = 'password';
+                    toggleIcon.classList.remove('fe-eye-off');
+                    toggleIcon.classList.add('fe-eye');
+                }
+            });
+        }
+    });
+</script>

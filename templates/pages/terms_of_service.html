@@ -1,0 +1,30 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+<!-- Start Extra Styles -->
+{% block extra_styles %} {% include 'content/about/extra_styles.html' %} {% endblock %}
+<!-- End Extra Styles -->
+
+<!--- Start Page Content -->
+{% block page_content %}
+<!-- Page Content -->
+
+<!--Banner Section-->
+{% include 'content/terms_of_services/banner.html' %}
+<!--End Section-->
+
+<!--Terms of Services Section-->
+{% include 'content/terms_of_services/terms.html' %}
+<!--End Section-->
+
+<!--Newsletter Section-->
+{% include 'components/subscribe.html' %}
+<!--End Section-->
+
+<!--- End Page Content -->
+{% endblock %}
+<!-- Extra Scripts Start -->
+{% block extra_scripts%} {% include 'content/about/extra_scripts.html' %} {% endblock %}
+<!-- Extra Scripts End -->
+
+{% block title %} | Terms of Service{% endblock %}

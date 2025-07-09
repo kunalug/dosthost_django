@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hosting Order Details - #ORD-2025-001</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            animation: slideUp 0.6s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .order-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .order-subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .status-badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { box-shadow: 0 0 10px rgba(255, 255, 255, 0.2); }
+            to { box-shadow: 0 0 20px rgba(255, 255, 255, 0.4); }
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .info-card {
+            background: linear-gradient(145deg, #f8f9ff, #e8f0ff);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(102, 126, 234, 0.1);
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #4a5568;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-title::before {
+            content: '';
+            width: 4px;
+            height: 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 2px;
+        }
+
+        .card-content {
+            color: #718096;
+            line-height: 1.6;
+        }
+
+        .items-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .item {
+            display: flex;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid #e2e8f0;
+            transition: background-color 0.3s ease;
+        }
+
+        .item:last-child {
+            border-bottom: none;
+        }
+
+        .item:hover {
+            background-color: #f7fafc;
+            border-radius: 10px;
+            margin: 0 -10px;
+            padding: 20px 10px;
+        }
+
+        .item-image {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 10px;
+            margin-right: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .item-details {
+            flex: 1;
+        }
+
+        .item-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 5px;
+        }
+
+        .item-specs {
+            color: #718096;
+            font-size: 0.9rem;
+        }
+
+        .item-price {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .summary {
+            background: linear-gradient(145deg, #667eea, #764ba2);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 30px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding: 10px 0;
+        }
+
+        .summary-row.total {
+            border-top: 2px solid rgba(255, 255, 255, 0.3);
+            margin-top: 20px;
+            padding-top: 20px;
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .timeline {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            margin-top: 30px;
+        }
+
+        .timeline-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 40px;
+            width: 2px;
+            height: calc(100% + 10px);
+            background: #e2e8f0;
+        }
+
+        .timeline-item:last-child::before {
+            display: none;
+        }
+
+        .timeline-dot {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            margin-right: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            z-index: 1;
+            position: relative;
+        }
+
+        .timeline-dot.completed {
+            background: #48bb78;
+        }
+
+        .timeline-content {
+            flex: 1;
+        }
+
+        .timeline-title {
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 5px;
+        }
+
+        .timeline-time {
+            color: #718096;
+            font-size: 0.9rem;
+        }
+
+        .actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 10px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        .btn-secondary:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                border-radius: 15px;
+            }
+
+            .header {
+                padding: 20px;
+            }
+
+            .order-title {
+                font-size: 2rem;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .item-image {
+                margin-right: 0;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-content">
+                <div>
+                    <h1 class="order-title">Order #ORD-2025-001</h1>
+                    <p class="order-subtitle">Placed on June 8, 2025 at 2:30 PM</p>
+                </div>
+                <div class="status-badge" id="statusBadge">Processing</div>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3 class="card-title">Shipping Address</h3>
+                    <div class="card-content">
+                        <strong>John Doe</strong><br>
+                        123 Main Street, Apt 4B<br>
+                        New York, NY 10001<br>
+                        United States<br>
+                        Phone: +1 (555) 123-4567
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <h3 class="card-title">Billing Address</h3>
+                    <div class="card-content">
+                        <strong>John Doe</strong><br>
+                        123 Main Street, Apt 4B<br>
+                        New York, NY 10001<br>
+                        United States<br>
+                        Card ending in ****1234
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <h3 class="card-title">Service Information</h3>
+                    <div class="card-content">
+                        <strong>Activation Date:</strong> June 8, 2025<br>
+                        <strong>Billing Cycle:</strong> Monthly<br>
+                        <strong>Server Location:</strong> US East (Virginia)<br>
+                        <strong>Control Panel:</strong> cPanel/WHM
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <h3 class="card-title">Order Information</h3>
+                    <div class="card-content">
+                        <strong>Order Date:</strong> June 8, 2025<br>
+                        <strong>Payment Method:</strong> Credit Card<br>
+                        <strong>Currency:</strong> USD<br>
+                        <strong>Customer ID:</strong> CUST789456
+                    </div>
+                </div>
+            </div>
+
+            <div class="items-section">
+                <h2 class="section-title">Order Items</h2>
+                
+                <div class="item">
+                    <div class="item-image">VPS</div>
+                    <div class="item-details">
+                        <div class="item-name">Premium VPS Hosting</div>
+                        <div class="item-specs">4 vCPU, 8GB RAM, 160GB SSD, 10TB Bandwidth | 12 months</div>
+                    </div>
+                    <div class="item-price">$29.99/mo</div>
+                </div>
+
+                <div class="item">
+                    <div class="item-image">SSL</div>
+                    <div class="item-details">
+                        <div class="item-name">Wildcard SSL Certificate</div>
+                        <div class="item-specs">256-bit encryption, Multi-domain support | 12 months</div>
+                    </div>
+                    <div class="item-price">$89.99/yr</div>
+                </div>
+
+                <div class="item">
+                    <div class="item-image">CDN</div>
+                    <div class="item-details">
+                        <div class="item-name">Global CDN Service</div>
+                        <div class="item-specs">200+ Edge locations, DDoS protection | 12 months</div>
+                    </div>
+                    <div class="item-price">$19.99/mo</div>
+                </div>
+            </div>
+
+            <div class="summary">
+                <h3 class="section-title" style="color: white; border-color: rgba(255,255,255,0.3);">Order Summary</h3>
+                <div class="summary-row">
+                    <span>VPS Hosting (12 months):</span>
+                    <span>$359.88</span>
+                </div>
+                <div class="summary-row">
+                    <span>SSL Certificate:</span>
+                    <span>$89.99</span>
+                </div>
+                <div class="summary-row">
+                    <span>CDN Service (12 months):</span>
+                    <span>$239.88</span>
+                </div>
+                <div class="summary-row">
+                    <span>Setup Fee:</span>
+                    <span>$0.00</span>
+                </div>
+                <div class="summary-row">
+                    <span>Tax:</span>
+                    <span>$55.48</span>
+                </div>
+                <div class="summary-row">
+                    <span>Discount (WELCOME20):</span>
+                    <span>-$137.95</span>
+                </div>
+                <div class="summary-row total">
+                    <span>Total (First Year):</span>
+                    <span>$607.28</span>
+                </div>
+            </div>
+
+            <div class="timeline">
+                <h3 class="section-title">Order Timeline</h3>
+                
+                <div class="timeline-item">
+                    <div class="timeline-dot completed">✓</div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">Order Placed</div>
+                        <div class="timeline-time">June 8, 2025 at 2:30 PM</div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot completed">✓</div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">Payment Confirmed</div>
+                        <div class="timeline-time">June 8, 2025 at 2:32 PM</div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot">⚡</div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">Provisioning Services</div>
+                        <div class="timeline-time">Currently in progress</div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot">🔧</div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">Server Configuration</div>
+                        <div class="timeline-time">Expected: June 10, 2025</div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot">📧</div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">Login Details Sent</div>
+                        <div class="timeline-time">Expected: June 10, 2025</div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot">✅</div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">Services Active</div>
+                        <div class="timeline-time">Expected: June 10, 2025</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="actions">
+                <button class="btn btn-primary" onclick="accessControlPanel()">Access Control Panel</button>
+                <button class="btn btn-secondary" onclick="viewServerDetails()">Server Details</button>
+                <button class="btn btn-secondary" onclick="contactSupport()">Contact Support</button>
+                <button class="btn btn-secondary" onclick="downloadInvoice()">Download Invoice</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function accessControlPanel() {
+            alert('Redirecting to cPanel...\nServer: server1.yourhost.com\nPlease check your email for login credentials.');
+        }
+
+        function viewServerDetails() {
+            alert('Server Information:\n\nIP Address: 192.168.1.100\nHostname: vps1.yourhost.com\nOS: Ubuntu 22.04 LTS\nLocation: Virginia, USA');
+        }
+
+        function contactSupport() {
+            alert('Opening support ticket system...\nOrder ID: ORD-2025-001\nPriority: Standard');
+        }
+
+        function downloadInvoice() {
+            alert('Downloading invoice...\nInvoice #INV-2025-001');
+        }
+
+        // Animate status badge
+        const statusBadge = document.getElementById('statusBadge');
+        let colorIndex = 0;
+        const colors = ['rgba(255, 255, 255, 0.2)', 'rgba(255, 255, 255, 0.4)'];
+        
+        setInterval(() => {
+            statusBadge.style.background = colors[colorIndex];
+            colorIndex = (colorIndex + 1) % colors.length;
+        }, 2000);
+
+        // Add hover effects to items
+        document.querySelectorAll('.item').forEach(item => {
+            item.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateX(10px)';
+            });
+            
+            item.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateX(0)';
+            });
+        });
+    </script>
+</body>
+</html>

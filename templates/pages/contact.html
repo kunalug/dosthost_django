@@ -1,0 +1,181 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block title %} | Get in Touch{% endblock %}
+
+<!-- Start Extra Styles -->
+{% block extra_styles %} {% include 'content/contact/extra_styles.html' %} {% endblock %}
+<!-- End Extra Styles -->
+
+<!--- Start Page Content -->
+{% block page_content %}
+<!-- Page Content -->
+
+<!--Start Banner-->
+{% include 'content/contact/banner.html' %}
+<!--End Banner-->
+
+<section class="section bg-pattern-1 bg-image3">
+    <div class="container">
+        <div class="heading-section mb-0">
+            <div class="heading-subtitle"><span class="tx-primary tx-16 fw-semibold">Contact Us</span></div>
+            <div class="heading-title">Get In Touch <span class="tx-primary">With Us</span></div>
+            <div class="heading-description">We're ready and waiting for your questions</div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="reveal my-5">
+                    <div class="row text-center">
+                        <div class="col-xl-3 col-md-6 col-lg-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="mb-3">
+                                        <span class="avatar avatar-lg bg-secondary-gradient text-white tx-24 br-style"><i class="bi bi-geo-alt"></i></span>
+                                    </div>
+                                    <h5 class="mb-1">Utopian Gateway</h5>
+                                    <p class="mb-0">Gurugram, Haryana </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-md-6 col-lg-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="mb-3">
+                                        <span class="avatar avatar-lg bg-pink-gradient br-style text-white tx-24"><i class="bi bi-telephone"></i></span>
+                                    </div>
+                                    <h5 class="mb-1">Phone</h5>
+                                    <p class="mb-0">+91-9650865885 </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-md-6 col-lg-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="mb-3">
+                                        <span class="avatar avatar-lg bg-purple-gradient br-style text-white tx-24"><i class="bi bi-envelope-plus"></i></span>
+                                    </div>
+                                    <h5 class="mb-1">Email</h5>
+                                    <p class="mb-0">info@dost.host</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-md-6 col-lg-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="mb-3">
+                                        <span class="avatar avatar-lg bg-teal-gradient br-style text-white tx-24"><i class="bi bi-clock-history"></i></span>
+                                    </div>
+                                    <h5 class="mb-1">Working Hours</h5>
+                                    <p class="mb-0">24x7 Technical Support</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row align-items-center justify-content-center">
+            <div class="col-lg-11">
+                <div class="card border">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-7">
+                                <div class="card feature-client-bg shadow-none">
+                                    <img src="{% static 'assets/images/patterns/9.png' %}" alt="img" class="patterns-9 sub-pattern-2 filter-invert op-1 z-index--1">
+                                    <div class="card-body pb-0">
+                                        <h4 class="mb-4">Drop a Message To Us</h4>
+                                        <div id="contact-form-messages"></div>
+                                        <form class="form-horizontal" method="post" id="contact-form">
+                                            {% csrf_token %}
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <div class="mb-3">
+                                                        {{ form.name }}
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="mb-3">
+                                                        {{ form.email }}
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    <div class="mb-3">
+                                                        {{ form.subject }}
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    <div class="mb-3">
+                                                        {{ form.message }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="">
+                                                <button type="submit" class="btn btn-secondary btn-lg bg-secondary-gradient">Send Message</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-5">
+                                <div class="card bg-transparent shadow-none ">
+                                    <div class="card-body pb-0">
+                                        <h4 class="mb-4">Looking for a Support?</h4>
+                                        <p class="mb-4">Day or night, rain or shine, anytime 24 / 7 / 365 our team is here for you!</p>
+                                        <ul class="list-unstyled">
+                                            <li class="list-item mb-4">
+                                                <div class="d-flex">
+                                                    <span class="tx-primary tx-20 me-3 avatar bg-primary-01 rounded-circle my-auto"><i class="bi bi-geo-alt"></i></span>
+                                                    <div>
+                                                        <h6 class="mb-0">Utopian Gateway</h6>
+                                                        <p class="mb-0">Gurugram, Haryana </p>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="list-item mb-4">
+                                                <div class="d-flex">
+                                                    <span class="tx-primary tx-20 me-3 avatar bg-primary-01 rounded-circle my-auto"><i class="bi bi-headset"></i></span>
+                                                    <div>
+                                                        <h6 class="mb-0">Phone</h6>
+                                                        <p class="mb-0">+91-9650865885 </p>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="list-item mb-4">
+                                                <div class="d-flex">
+                                                    <span class="tx-primary tx-20 me-3 avatar bg-primary-01 rounded-circle my-auto"><i class="bi bi-envelope-plus"></i></span>
+                                                    <div>
+                                                        <h6 class="mb-0">Email</h6>
+                                                        <p class="mb-0">info@dost.host </p>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="list-item">
+                                                <div class="d-flex">
+                                                    <span class="tx-primary tx-20 me-3 avatar bg-primary-01 rounded-circle my-auto"><i class="bi bi-clock-history"></i></span>
+                                                    <div>
+                                                        <h6 class="mb-0">Working Hours</h6>
+                                                        <p class="mb-0">24x7 Technical Support </p>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="">
+                                    <img src="{% static 'assets/images/patterns/7.png' %}" alt="img" class="patterns-8 sub-pattern-3 z-index-0 op-1">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</div>
+<!--- End Page Content -->
+{% endblock %}
+<!-- Extra Scripts Start -->
+{% block extra_scripts%} {% include 'content/contact/extra_scripts.html' %} {% endblock %}
+<!-- Extra Scripts End -->

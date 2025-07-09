@@ -1,0 +1,317 @@
+{% load static %}
+<!-- Start Plans Section -->
+<section class="section bg-pattern-1" id="plans">
+    <div class="container">
+        <div class="heading-section">
+            <div class="heading-subtitle"><span class="tx-primary tx-16 fw-semibold">Choose</span></div>
+            <div class="heading-title">Select Pricing <span class="tx-primary">Plans</span></div>
+            <div class="heading-description">Choose A Suitable Plan</div>
+        </div>
+        <div class="text-center mb-4">
+            <div class="tab-style-1 border p-1 rounded-pill d-inline-block">
+                <ul class="nav nav-pills">
+                    <li class="nav-item">
+                        <button class="nav-link rounded-pill active" data-bs-toggle="pill" data-bs-target="#pills-monthly">Monthly</button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link rounded-pill" data-bs-toggle="pill" data-bs-target="#pills-quarterly">Quarterly</button>
+                    </li>
+                    <li class="nav-item">
+                       <button class="nav-link rounded-pill" data-bs-toggle="pill" data-bs-target="#pills-semi-annually">Semi-Annually</button>
+                   </li>
+                    <li class="nav-item">
+                        <button class="nav-link rounded-pill" data-bs-toggle="pill" data-bs-target="#pills-yearly">Yearly</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="tab-content">
+            <!-- Monthly Plans -->
+            <div class="tab-pane fade show active" id="pills-monthly">
+                <div class="card shadow-none mb-0">
+                    <div class="card-body p-0">
+                        <div class="table-responsive border br-7">
+                            <table class="table table-bordered pricing-table mb-0 table-hover border-hidden">
+                                <thead>
+                                    <tr>
+                                        <th class="">
+                                            <div class="text-start">
+                                                <p class="h5 mb-3">Based Plans</p>
+                                                {% comment %} <div class="d-lg-flex align-items-center justify-content-between">
+                                                    <div class="form-check form-switch form-switch-lg mb-0">
+                                                        <input class="form-check-input" type="checkbox" role="switch" id="switchHdd-month">
+                                                        <label class="form-check-label" for="switchHdd-month">Switch to HDD</label>
+                                                    </div>
+                                                    <a href="dedicated-server.html" class="plain-link">Learn more</a>
+                                                </div> {% endcomment %}
+                                            </div>
+                                        </th>
+                                        {% for plan in monthly_plans %}
+                                        <th>
+                                            <span class="avatar rounded-circle bg-primary-transparent tx-primary mb-3">
+                                                <i class="{{ plan.category.icon_class|default:'bi bi-activity' }}"></i>
+                                            </span>
+                                            <p class="h5 mb-2">{{ plan.title }}</p>
+                                            <p class="h2 mb-0 tx-28">₹{{ plan.monthly_price }}<span class="tx-13 tx-muted op-7 ms-1">/ month</span></p>
+                                        </th>
+                                        {% empty %}
+                                        <th>
+                                            <div class="text-center p-4">
+                                                <p class="text-muted">No monthly plans available</p>
+                                            </div>
+                                        </th>
+                                        {% endfor %}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% if monthly_plans %}
+                                    {% comment %} <tr>
+                                        <td class="pricing-feature">Cores</td>
+                                        {% for plan in monthly_plans %}
+                                        <td>{{ plan.cores_display }}</td>
+                                        {% endfor %}
+                                    </tr> {% endcomment %}
+                                    {% comment %} <tr>
+                                        <td class="pricing-feature">RAM</td>
+                                        {% for plan in monthly_plans %}
+                                        <td>{{ plan.ram_display }}</td>
+                                        {% endfor %}
+                                    </tr> {% endcomment %}
+                                    {% comment %} <tr>
+                                        <td class="pricing-feature main-feature">Disk Space</td>
+                                        {% for plan in monthly_plans %}
+                                        <td class="main-feature">{{ plan.disk_space_display }}</td>
+                                        {% endfor %}
+                                    </tr> {% endcomment %}
+                                    <tr>
+                                        <td class="pricing-feature">Features</td>
+                                        {% for plan in monthly_plans %}
+                                        <td>{{ plan.monthly_details|linebreaksbr }}</td>
+                                        {% endfor %}
+                                    </tr>
+                                    {% comment %} <tr>
+                                        <td class="pricing-feature">Dedicated IPs</td>
+                                        {% for plan in monthly_plans %}
+                                        <td>{{ plan.additional_ips_display }}</td>
+                                        {% endfor %}
+                                    </tr> {% endcomment %}
+                                    <tr>
+                                        <td></td>
+                                        {% for plan in monthly_plans %}
+                                        <td>
+                                            <p class="mb-0 d-grid">
+                                                <a href="{% url 'select_plan_for_checkout' plan.id %}" class="btn btn-outline-primary">Get Started</a>
+                                            </p>
+                                        </td>
+                                        {% endfor %}
+                                    </tr>
+                                    {% endif %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Quarterly Plans -->
+            <div class="tab-pane fade" id="pills-quarterly">
+                <div class="card shadow-none mb-0">
+                    <div class="card-body p-0">
+                        <div class="table-responsive border br-7">
+                            <table class="table table-bordered pricing-table mb-0 table-hover border-hidden">
+                                <thead>
+                                    <tr>
+                                        <th class="">
+                                            <div class="text-start">
+                                                <p class="h5 mb-3">Based Plans</p>
+                                            </div>
+                                        </th>
+                                        {% for plan in quarterly_plans %}
+                                        <th>
+                                            <span class="avatar rounded-circle bg-primary-transparent tx-primary mb-3">
+                                                <i class="{{ plan.category.icon_class|default:'bi bi-activity' }}"></i>
+                                            </span>
+                                            <p class="h5 mb-2">{{ plan.title }}</p>
+                                            <p class="h2 mb-0 tx-28">₹{{ plan.quarterly_price }}<span class="tx-13 tx-muted op-7 ms-1">/ quarterly</span></p>
+                                        </th>
+                                        {% empty %}
+                                        <th>
+                                            <div class="text-center p-4">
+                                                <p class="text-muted">No quarterly plans available</p>
+                                            </div>
+                                        </th>
+                                        {% endfor %}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% if quarterly_plans %}
+                                    <tr>
+                                        <td class="pricing-feature">Features</td>
+                                        {% for plan in quarterly_plans %}
+                                        <td>{{ plan.quarterly_details|linebreaksbr }}</td>
+                                        {% endfor %}
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        {% for plan in quarterly_plans %}
+                                        <td>
+                                            <p class="mb-0 d-grid">
+                                                <a href="{% url 'select_plan_for_checkout' plan.id %}" class="btn btn-outline-primary">Get Started</a>
+                                            </p>
+                                        </td>
+                                        {% endfor %}
+                                    </tr>
+                                    {% endif %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+           <!-- Semi-Annually Plans -->
+           <div class="tab-pane fade" id="pills-semi-annually">
+               <div class="card shadow-none mb-0">
+                   <div class="card-body p-0">
+                       <div class="table-responsive border br-7">
+                           <table class="table table-bordered pricing-table mb-0 table-hover border-hidden">
+                               <thead>
+                                   <tr>
+                                       <th class="">
+                                           <div class="text-start">
+                                               <p class="h5 mb-3">Based Plans</p>
+                                           </div>
+                                       </th>
+                                       {% for plan in semi_annual_plans %}
+                                       <th>
+                                           <span class="avatar rounded-circle bg-primary-transparent tx-primary mb-3">
+                                               <i class="{{ plan.category.icon_class|default:'bi bi-activity' }}"></i>
+                                           </span>
+                                           <p class="h5 mb-2">{{ plan.title }}</p>
+                                           <p class="h2 mb-0 tx-28">₹{{ plan.semi_annually_price }}<span class="tx-13 tx-muted op-7 ms-1">/ semi-annually</span></p>
+                                       </th>
+                                       {% empty %}
+                                       <th>
+                                           <div class="text-center p-4">
+                                               <p class="text-muted">No semi-annual plans available</p>
+                                           </div>
+                                       </th>
+                                       {% endfor %}
+                                   </tr>
+                               </thead>
+                               <tbody>
+                                   {% if semi_annual_plans %}
+                                   <tr>
+                                       <td class="pricing-feature">Features</td>
+                                       {% for plan in semi_annual_plans %}
+                                       <td>{{ plan.semi_annually_details|linebreaksbr }}</td>
+                                       {% endfor %}
+                                   </tr>
+                                   <tr>
+                                       <td></td>
+                                       {% for plan in semi_annual_plans %}
+                                       <td>
+                                           <p class="mb-0 d-grid">
+                                               <a href="{% url 'select_plan_for_checkout' plan.id 'semi_annually' %}" class="btn btn-outline-primary">Get Started</a>
+                                           </p>
+                                       </td>
+                                       {% endfor %}
+                                   </tr>
+                                   {% endif %}
+                               </tbody>
+                           </table>
+                       </div>
+                   </div>
+               </div>
+           </div>
+           
+            <!-- Yearly Plans -->
+            <div class="tab-pane fade" id="pills-yearly">
+                <div class="card shadow-none mb-0">
+                    <div class="card-body p-0">
+                        <div class="table-responsive border br-7">
+                            <table class="table table-bordered pricing-table mb-0 table-hover border-hidden">
+                                <thead>
+                                    <tr>
+                                        <th class="">
+                                            <div class="text-start">
+                                                <p class="h5 mb-3">Based Plans</p>
+                                                {% comment %} <div class="d-lg-flex align-items-center justify-content-between">
+                                                    <div class="form-check form-switch form-switch-lg mb-0">
+                                                        <input class="form-check-input" type="checkbox" role="switch" id="switchHdd-year">
+                                                        <label class="form-check-label" for="switchHdd-year">Switch to HDD</label>
+                                                    </div>
+                                                    <a href="dedicated-server.html" class="plain-link">Learn more</a>
+                                                </div> {% endcomment %}
+                                            </div>
+                                        </th>
+                                        {% for plan in yearly_plans %}
+                                        <th>
+                                            <span class="avatar rounded-circle bg-primary-transparent tx-primary mb-3">
+                                                <i class="{{ plan.category.icon_class|default:'bi bi-activity' }}"></i>
+                                            </span>
+                                            <p class="h5 mb-2">{{ plan.title }}</p>
+                                            <p class="h2 mb-0 tx-28">₹{{ plan.yearly_price }}<span class="tx-13 tx-muted op-7 ms-1">/ year</span></p>
+                                        </th>
+                                        {% empty %}
+                                        <th>
+                                            <div class="text-center p-4">
+                                                <p class="text-muted">No yearly plans available</p>
+                                            </div>
+                                        </th>
+                                        {% endfor %}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% if yearly_plans %}
+                                    {% comment %} <tr>
+                                        <td class="pricing-feature">Cores</td>
+                                        {% for plan in yearly_plans %}
+                                        <td>{{ plan.cores_display }}</td>
+                                        {% endfor %}
+                                    </tr> {% endcomment %}
+                                    {% comment %} <tr>
+                                        <td class="pricing-feature">RAM</td>
+                                        {% for plan in yearly_plans %}
+                                        <td>{{ plan.ram_display }}</td>
+                                        {% endfor %}
+                                    </tr> {% endcomment %}
+                                    {% comment %} <tr>
+                                        <td class="pricing-feature main-feature">Disk Space</td>
+                                        {% for plan in yearly_plans %}
+                                        <td class="main-feature">{{ plan.disk_space_display }}</td>
+                                        {% endfor %}
+                                    </tr> {% endcomment %}
+                                    <tr>
+                                        <td class="pricing-feature">Features</td>
+                                        {% for plan in yearly_plans %}
+                                        <td>{{ plan.yearly_details|linebreaksbr }}</td>
+                                        {% endfor %}
+                                    </tr>
+                                    {% comment %} <tr>
+                                        <td class="pricing-feature">Dedicated IPs</td>
+                                        {% for plan in yearly_plans %}
+                                        <td>{{ plan.additional_ips_display }}</td>
+                                        {% endfor %}
+                                    </tr> {% endcomment %}
+                                    <tr>
+                                        <td></td>
+                                        {% for plan in yearly_plans %}
+                                        <td>
+                                            <p class="mb-0 d-grid">
+                                                <a href="{% url 'select_plan_for_checkout' plan.id %}" class="btn btn-outline-primary">Get Started</a>
+                                            </p>
+                                        </td>
+                                        {% endfor %}
+                                    </tr>
+                                    {% endif %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Plans Section -->

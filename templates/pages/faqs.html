@@ -1,0 +1,31 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+<!-- Start Extra Styles -->
+{% block extra_styles %} {% include 'content/about/extra_styles.html' %} {% endblock %}
+<!-- End Extra Styles -->
+
+<!--- Start Page Content -->
+{% block page_content %}
+<!-- Page Content -->
+
+<!--Start Banner-->
+{% include 'content/faqs/banner.html' %}
+<!--End Banner-->
+
+<!--Start Faqs-->
+{% include 'content/faqs/faqs.html' %}
+<!--End Faqs-->
+
+<!--Start Subscribe-->
+{% include 'components/subscribe.html' %}
+<!--Start Subscribe-->
+
+<!--- End Page Content -->
+{% endblock %}
+<!-- Extra Scripts Start -->
+{% block extra_scripts%} {% include 'content/home/extra_scripts.html' %} {% endblock %}
+<!-- Extra Scripts End -->
+
+{% block title %} | FAQs{% endblock %}
+

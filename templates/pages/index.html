@@ -1,0 +1,59 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+<!-- Title Block for SEO -->
+{% block title %} | Web Hosting India{% endblock %}
+<!-- Start Extra Styles -->
+{% block extra_styles %} {% include 'content/home/extra_styles.html' %} {% endblock %}
+<!-- End Extra Styles -->
+
+<!--- Start Page Content -->
+{% block page_content %}
+<!-- Page Content -->
+
+
+<!-- Start Banner-->
+{% include 'content/home/banner.html' %}
+<!-- End Banner-->
+
+<!-- Start Features-->
+{% include 'content/home/features.html' %}
+<!-- End Features-->
+
+<!-- Start Services-->
+{% include 'content/home/services.html' %}
+<!-- End Services-->
+
+<!-- Start Building Website-->
+{% include 'content/home/buitld_website.html' %}
+<!-- End Building Website-->
+
+<!-- Start Looking For a Domain-->
+{% comment %} {% include 'content/home/looking_for_a_domain.html' %} {% endcomment %}
+<!-- End Looking For a Domain-->
+
+<!-- Start Benefits-->
+{% include 'content/home/benefits.html' %}
+<!-- End Benefits-->
+
+<!-- Start Why Choose Us?-->
+{% include 'content/home/why_choose.html' %}
+<!-- End Why Choose Us?-->
+
+<!-- Start Our Blog-->
+{% include 'content/home/blog.html' %}
+<!-- End Our Blog-->
+
+<!--Best Support -->
+{% include 'components/best_support.html' %}
+<!-- End Best Support -->
+
+<!-- Reviews Section -->
+{% include 'components/reviews.html' %}
+<!-- End Reviews Section -->
+
+<!--- End Page Content -->
+{% endblock %}
+<!-- Extra Scripts Start -->
+{% block extra_scripts%} {% include 'content/home/extra_scripts.html' %} {% endblock %}
+<!-- Extra Scripts End -->

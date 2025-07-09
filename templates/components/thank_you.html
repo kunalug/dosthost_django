@@ -1,0 +1,89 @@
+<section class="section banner-section bg-pattern-1">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-8">
+                <div class="success-container">
+                <div class="floating-shapes">
+                    <div class="shape">
+                        <svg width="40" height="40" viewBox="0 0 40 40" fill="currentColor">
+                            <circle cx="20" cy="20" r="20"/>
+                        </svg>
+                    </div>
+                    <div class="shape">
+                        <svg width="30" height="30" viewBox="0 0 30 30" fill="currentColor">
+                            <polygon points="15,0 18.5,11.5 30,15 18.5,18.5 15,30 11.5,18.5 0,15 11.5,11.5"/>
+                        </svg>
+                    </div>
+                    <div class="shape">
+                        <svg width="35" height="35" viewBox="0 0 35 35" fill="currentColor">
+                            <rect width="35" height="35" rx="8"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="success-header">
+                    <div class="success-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <div class="heading-section">
+                        <div class="heading-title text-center">
+                            <h1 class="success-title">Thank You for Your <span class="">Order!</span></h1>
+                        </div>
+                    </div>
+                    <p class="success-subtitle">Your order has been placed successfully</p>
+                </div>
+
+                <div class="order-details">
+                    <div class="row justify-content-center">
+                        <div class="col-md-8">
+                            <div class="text-center">
+                                <div class="order-id">
+                                    <h4 class="card-title order-number">Order #{{ order.id }}</h4>
+                                </div>
+                                <div class="transaction-details" style="margin-bottom: 1.5rem; text-align: left; max-width: 400px; margin-left: auto; margin-right: auto;">
+                                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                        <span style="font-weight: 500;">Transaction ID:</span>
+                                        <span>{{ order.transaction_id }}</span>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between;">
+                                        <span style="font-weight: 500;">Hosting Plan:</span>
+                                        <span>{{ order.hosting_plan.title }}</span>
+                                    </div>
+                                </div>
+                                <div class="payment-status">
+                                    <div class="status-badge {% if order.payment_status == 'completed' %}bg-success{% elif order.payment_status == 'pending' %}bg-warning{% else %}bg-danger{% endif %}">
+                                        {% if order.payment_status == 'completed' %}
+                                            <svg class="status-icon" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                            </svg>
+                                            Payment Confirmed - ₹{{ order.total_amount|floatformat:2 }}
+                                        {% elif order.payment_status == 'Pending' %}
+                                            <svg class="status-icon" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+                                            </svg>
+                                            Payment {{ order.payment_status }} - ₹{{ order.total_amount|floatformat:2 }}
+                                        {% else %}
+                                            <svg class="status-icon" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+                                            </svg>
+                                            Payment {{ order.payment_status }} - ₹{{ order.total_amount|floatformat:2 }}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="action-buttons">
+                                    <a href="{% url 'dashboard' %}" class="btn btn-primary">
+                                        <i class="fa-solid fa-cart-shopping"></i>
+                                        &nbsp;View All Order
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>

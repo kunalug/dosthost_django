@@ -1,0 +1,58 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block title %} | Linux Shared Hosting Plans{% endblock %}
+
+<!-- Start Extra Styles -->
+{% block extra_styles %} {% include 'content/linux_shared_hosting/extra_styles.html' %} {% endblock %}
+<!-- End Extra Styles -->
+
+<!--- Start Page Content -->
+{% block page_content %}
+<!-- Page Content -->
+
+<!--Start Banner-->
+{% include 'content/linux_shared_hosting/banner.html' %}
+<!--End Banner-->
+
+<!--Start Plans-->
+{% include 'content/linux_shared_hosting/plans.html' %}
+<!--End Plans-->
+
+<!--Start Features-->
+{% include 'content/linux_shared_hosting/features.html' %}
+<!--End Features-->
+
+<!--Start Plugins-->
+{% include 'content/linux_shared_hosting/plugins.html' %}
+<!--End Plugins-->
+
+<!--Start Why Choose Us-->
+{% include 'content/linux_shared_hosting/why_choose.html' %}
+<!--End Why Choose Us-->
+
+<!--Start Speed-->
+{% include 'content/linux_shared_hosting/speed.html' %}
+<!--End Speed-->
+
+<!--Start Installation-->
+{% include 'content/linux_shared_hosting/installation.html' %}
+<!--End Installation-->
+
+<!--Start Key Features-->
+{% include 'content/linux_shared_hosting/key.html' %}
+<!--End Key Features-->
+
+<!--Start Best Support -->
+{% include 'components/best_support.html' %}
+<!--End Best Support -->
+
+<!--Start FAQ'S-->
+{% include 'components/faqs.html' %}
+<!--End FAQ'S-->
+
+<!--- End Page Content -->
+{% endblock %}
+<!-- Extra Scripts Start -->
+{% block extra_scripts%} {% include 'content/linux_shared_hosting/extra_scripts.html' %} {% endblock %}
+<!-- Extra Scripts End -->

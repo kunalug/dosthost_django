@@ -1,0 +1,164 @@
+{% load static %}
+
+{% block body_class %}{% endblock %}
+
+<div class="main-content app-content">
+<section class="section banner-section bg-pattern-1">
+    <img src="{% static 'assets/images/patterns/2.png' %}" alt="img" class="patterns-6 op-1 z-index-0 top-14p">
+    <img src="{% static 'assets/images/patterns/2.png' %}" alt="img" class="patterns-1 op-1">
+    <div class="container">
+        <div class="heading-section">
+            <div class="heading-subtitle"><span class="tx-primary tx-16 fw-semibold">Sign Up</span></div>
+            <div class="heading-title">Create your <span class="tx-primary">Account</span></div>
+        </div>
+        <div class="row justify-content-center align-items-center">
+            <div class="col-xl-7 col-lg-9 mt-3">
+                <a href="{% url 'home' %}">
+                    {% if logo.auth_logo %}
+                        <img src="{{ logo.auth_logo.url }}" alt="img" class="auth-logo logo-color mb-4 mx-auto">
+                        <img src="{{ logo.auth_logo.url }}" alt="img" class="auth-logo logo-dark mb-4 mx-auto">
+                    {% else %}
+                        <img src="{% static 'assets/images/brand/dosthost-logo.png' %}" alt="img" class="auth-logo logo-color mb-4 mx-auto">
+                        <img src="{% static 'assets/images/brand/dosthost-logo.png' %}" alt="img" class="auth-logo logo-dark mb-4 mx-auto">
+                    {% endif %}
+                </a>
+                <div class="card border">
+                    <div class="card-body p-sm-6">
+                        <h3 class="mb-1">Sign Up</h3>
+                        <p class="mb-4 tx-muted">Create an account to continue.</p>
+                        
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                                    {{ message }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                        
+                        <form class="form-horizontal" method="post">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="mb-3">
+                                        <label class="mb-2 fw-500">First Name<span class="tx-danger ms-1">*</span></label>
+                                        {{ form.first_name }}
+                                        {% if form.first_name.errors %}
+                                            <div class="invalid-feedback d-block">
+                                                {{ form.first_name.errors.0 }}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="mb-3">
+                                        <label class="mb-2 fw-500">
+                                            <span class="d-inline-flex">Last Name</span>
+                                            <span class="tx-muted op-7 ms-1 tx-12 fw-normal">(optional)</span>
+                                        </label>
+                                        {{ form.last_name }}
+                                        {% if form.last_name.errors %}
+                                            <div class="invalid-feedback d-block">
+                                                {{ form.last_name.errors.0 }}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="mb-3">
+                                        <label class="mb-2 fw-500">Email<span class="tx-danger ms-1">*</span></label>
+                                        {{ form.email }}
+                                        {% if form.email.errors %}
+                                            <div class="invalid-feedback d-block">
+                                                {{ form.email.errors.0 }}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="mb-3">
+                                        <label class="mb-2 fw-500">Phone<span class="tx-danger ms-1">*</span></label>
+                                        {{ form.phone }}
+                                        {% if form.phone.errors %}
+                                            <div class="invalid-feedback d-block">
+                                                {{ form.phone.errors.0 }}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="mb-3">
+                                        <label class="mb-2 fw-500">Create a Password<span class="tx-danger ms-1">*</span></label>
+                                        <div class="input-group">
+                                            {{ form.password }}
+                                            <a href="javascript:void(0)" class="input-group-text bg-transparent tx-muted" onclick="togglePassword('id_password', 'showPassword1')">
+                                                <i class="fe fe-eye tx-muted op-7" id="showPassword1"></i>
+                                            </a>
+                                        </div>
+                                        {% if form.password.errors %}
+                                            <div class="invalid-feedback d-block">
+                                                {{ form.password.errors.0 }}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="mb-3">
+                                        <label class="mb-2 fw-500">Confirm Password<span class="tx-danger ms-1">*</span></label>
+                                        <div class="input-group">
+                                            {{ form.confirm_password }}
+                                            <a href="javascript:void(0)" class="input-group-text bg-transparent tx-muted" onclick="togglePassword('id_confirm_password', 'showPassword2')">
+                                                <i class="fe fe-eye tx-muted op-7" id="showPassword2"></i>
+                                            </a>
+                                        </div>
+                                        {% if form.confirm_password.errors %}
+                                            <div class="invalid-feedback d-block">
+                                                {{ form.confirm_password.errors.0 }}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-xl-12">
+                                    <div class="form-check mb-3">
+                                        {{ form.remember_me }}
+                                        <label class="form-check-label tx-15" for="{{ form.remember_me.id_for_label }}">
+                                            Remember me
+                                        </label>
+                                    </div>
+                                    
+                                    <!-- Display non-field errors -->
+                                    {% if form.non_field_errors %}
+                                        <div class="alert alert-danger">
+                                            {{ form.non_field_errors }}
+                                        </div>
+                                    {% endif %}
+                                    
+                                    <div class="d-grid mb-3">
+                                        <button type="submit" class="btn btn-primary">Create an Account</button>
+                                    </div>
+                                    
+                                    {% comment %}
+                                    <div class="d-grid mb-3">
+                                        <button type="button" class="btn btn-white border">
+                                            <img src="{% static 'assets/images/png/45.png' %}" class="me-2" alt="img" width="20">
+                                            Continue with Google
+                                        </button>
+                                    </div>
+                                    {% endcomment %}
+                                    
+                                    <div class="text-center">
+                                        <p class="mb-0 tx-14">Already have an account ?
+                                            <a href="{% url 'login' %}" class="tx-primary ms-1" style="color: #1457E6 !important;">Login</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
